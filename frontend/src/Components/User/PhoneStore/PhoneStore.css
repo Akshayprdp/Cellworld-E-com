@@ -1,0 +1,89 @@
+  .phone-store-container {
+    padding: 20px;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .phone-card {
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative; /* Needed for positioning buttons absolutely */
+  }
+
+  .phone-card img {
+    max-height: 300px;
+    object-fit: cover;
+  }
+
+  .cart-button-store {
+    height: 36px;
+    width: 106px;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    margin-left: 10px;
+  }
+
+  .purchase-button-store {
+    height: 36px;
+    width: 106px;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    margin-left: 140px;
+    margin-top: -35px;
+  }
+
+  .cart-button:hover,
+  .purchase-button:hover {
+    background-color: #23272b; /* Darker shade for hover effect */
+  }
+
+  .carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+  }
+
+  .carousel__image-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+  }
+
+  .carousel__image {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .carousel__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+  
+  }
+  .wishlist-icon-store{
+    margin-left: 250px;
+    margin-top: 20px;
+    position: absolute;  
+  }
+  .Store-Wishlisticon{
+    height: 35px;
+    color: red;
+  }

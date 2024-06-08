@@ -1,0 +1,53 @@
+.navbar {
+  background-color: #343333; /* Dark grey background */
+}
+
+.nav-link, .navbar-brand {
+  color: #ffffff !important; /* White text */
+  display: flex;
+  align-items: center;
+}
+
+.nav-link:hover {
+  color: #ffffff !important; /* White text on hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Light white background on hover */
+  border-radius: 5px; /* Rounded corners for the box effect */
+  padding: 10px;
+}
+
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1); /* White border for the toggler */
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); /* White icon */
+}
+
+.navbar-brand {
+  font-size: 2rem;
+  text-align: center;
+  flex: 1;
+  margin-left: 33px; /* Move CellWorld 33px to the right */
+}
+
+.navbar-nav {
+  flex: 1;
+}
+
+.navbar-nav.me-auto {
+  justify-content: flex-start;
+}
+
+.navbar-nav.ms-auto {
+  justify-content: flex-end;
+  margin-right: 150px; /* Move profile 150px to the left */
+}
+
+.dropdown-menu-end {
+  right: 0;
+  left: auto;
+}
+
+.nav-item.cart {
+  margin-right: 36px; /* Move cart 36px to the right */
+}

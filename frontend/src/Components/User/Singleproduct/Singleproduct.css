@@ -1,0 +1,77 @@
+
+.wrap2{
+    height: 600px;
+    width: 90%;
+    background-color:#FFFFFF;
+    margin-left: 5%;
+}
+.product-image{
+    width: 300px;
+    height: 300px;
+}
+.image{
+    height: 300px;
+    width: 300px;
+    background-color: rgb(126, 125, 125);
+    margin-left: 100px;
+    margin-top: 100px;
+    position: absolute;
+}
+.model{
+    position: absolute;
+    margin-left: 140px;
+    margin-top: 50px;
+}
+.price-single{
+    position: absolute;
+    margin-top: 424px;
+    margin-left: 130px;
+    
+}
+.special-price{
+    margin-top: 425px;
+    margin-left: 250px;
+    position: absolute;  
+}
+.original-price{
+    margin-top: 425px;
+    margin-left: 315px;
+    position: absolute;
+    text-decoration: line-through}
+.add-to-cart{
+    margin-top: 460px;
+    margin-left: 98px;
+}
+.buy-now{
+    margin-left: 5px;
+    width: 150px;
+}
+.rating-single{
+    margin-left: 200px;
+    margin-top: 400px;
+    position: absolute;
+    color:yellow;
+}
+.item-description{
+    margin-left: 500px;
+}
+.bank-offers{
+    margin-top: -200px;
+    margin-left: 600px;
+    position: absolute;
+}
+.item-description{
+    margin-top: -400px;
+    margin-left: 600px;
+    position: absolute;
+}
+.wishlist-link{
+    margin-top: 100px;
+    margin-left: 350px;
+    position: absolute;  
+}
+.wishlist-icon{
+    height: 40px;
+    margin-top: 10px;
+    color: red;
+}

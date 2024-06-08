@@ -1,0 +1,64 @@
+.profile-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #eae7e7;
+    padding: 20px;
+  }
+  
+  .profile-div, .faq-div {
+    width: 700px;
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-div h2, .faq-div h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .profile-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .profile-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .profile-form button {
+    background-color: #343333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .profile-form button:hover {
+    background-color: #5a5959;
+  }
+  
+  .faq-item {
+    margin-bottom: 20px;
+  }
+  
+  .faq-item h4 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .faq-item p {
+    margin: 5px 0 0 0;
+    color: #666;
+  }
+  

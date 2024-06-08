@@ -1,0 +1,75 @@
+.product-list {
+  background-color: #525050;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  padding: 20px;
+  overflow: auto;
+}
+
+.product-list-container {
+  background-color: rgba(243, 240, 240, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(197, 119, 119, 0.2), 0.2;
+  padding: 20px;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.product-table th,
+.product-table td {
+  border: 1px solid #f3eeee;
+  padding: 8px;
+}
+
+.product-table th {
+  background-color: #e8e4e4;
+}
+
+.product-table tr:nth-child(even) {
+  background-color: #f7f4f4;
+}
+
+.product-table tr:hover {
+  background-color: #e9e0e0;
+}
+
+.edit-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 1px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button:hover {
+  background-color: #45a049;
+}
+
+.dis-button {
+  background-color: #525050; /* Dark grey */
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 1px 2px 20px; /* Added 20px margin to the left */
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dis-button:hover {
+  background-color: #3e3e3e;
+}

@@ -1,0 +1,68 @@
+.product-availability {
+    background-image: url('https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2015/11/mobile-devices-collage-ss-1920.jpg?ssl=1&quality=80&w=f'); /* Add your image path here */
+    background-size: cover;
+    background-position: center;
+    width: 100vw; /* Make sure the background covers the full viewport width */
+    height: 100vh; /* Make sure the background covers the full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    padding-top: 40px; /* Adjust the value to control the top space */
+    overflow: hidden; /* Hide any overflow content */
+  }
+  
+  .form-container {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 
+      -14px -7px 20px -20px rgba(0, 0, 0, 0.45),
+      9px -7px 20px -20px rgba(0, 0, 0, 0.45),
+      1px 14px 20px -20px rgba(0, 0, 0, 0.45),
+      9px 0px 20px -20px rgba(0, 0, 0, 0.45);
+    width: 500px; /* Adjust the width as needed */
+  }
+  
+  .heading {
+    color: white; /* Make the heading text white */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-label {
+    color: white; /* Make the label text white */
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .error {
+    color: rgb(212, 24, 24);
+    margin-top: 5px;
+    font-size: 0.9em;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #343333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .btn:hover {
+    background-color: #5a5959;
+  }
+  .Button{margin-left: -150px;}

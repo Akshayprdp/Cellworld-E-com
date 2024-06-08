@@ -1,0 +1,58 @@
+.blocked-users {
+    background-image: url('https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2015/11/mobile-devices-collage-ss-1920.jpg?ssl=1&quality=80&w=f'); /* Add your image path here */
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px; /* Adjust the value to control the top space */
+  }
+  
+  .div2 {
+    margin-top: 100px;
+  }
+  
+  .heading {
+    color: white; /* Make the heading text white */
+  }
+  
+  table {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 
+      -14px -7px 20px -20px rgba(0, 0, 0, 0.45),
+      9px -7px 20px -20px rgba(0, 0, 0, 0.45),
+      1px 14px 20px -20px rgba(0, 0, 0, 0.45),
+      9px 0px 20px -20px rgba(0, 0, 0, 0.45);
+    width: 80%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: center;
+    color: white;
+  }
+  
+  th {
+    background-color: #343333; /* Dark grey background */
+  }
+  
+  td {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .btn-warning {
+    background-color: #ffcc00;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .btn-warning:hover {
+    background-color: #e6b800;
+  }
+  
