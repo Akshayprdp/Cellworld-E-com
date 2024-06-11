@@ -2,15 +2,20 @@ import React from 'react';
 import './Login.css';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 import { userLogin } from '../../../Services/UserApi';
 import { toast } from 'react-toastify';
+import { useState } from 'react';
+
 
 function Login() { 
+    const navigate = useNavigate();
+    
     const initialValues = {
         username: "",
         Password: "",
     };
+    
 
     const validationSchema = yup.object().shape({
         username: yup.string()
@@ -18,19 +23,25 @@ function Login() {
         Password: yup.string()
             .required("Password required"),
     });
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     async function onSubmit(values) {
         try {
             const response = await userLogin(values);
             if (response.data.success) {
-                toast.success(response.data.message); // Display success message
+                toast.success(response.data.message);
+                localStorage.setItem('token', response.data.token); 
+                localStorage.setItem('username', response.data.username); 
+                setIsLoggedIn(true);
+                navigate('/');
             } else {
-                toast.error(response.data.message); // Display error message
+                toast.error(response.data.message);
             }
         } catch (error) {
             console.error("There was an error logging in!", error);
         }
     }
+    
     
     const formik = useFormik({
         validationSchema,

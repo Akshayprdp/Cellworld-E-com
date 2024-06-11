@@ -31,7 +31,7 @@ function List() {
       <div className='main-div'>
         <div className='main-div2'>
           <div className='picture'>
-            <img src="C:/Users/infot/OneDrive/Desktop/THUMB_Galaxy-A34-5G-Media-Assets-Thumb.jpg" alt="Product Image" />
+            <img src="E:\MERN\my-react-app\frontend\public\Images\ONE-PLUS-NORD-CE-2-LITE-5G-BLUE-TIDE-6GB128GB-300x300.png" alt="Product Image" />
           </div>
           <div className='DandN'>
             <h1>Motorola G34 5G (Ocean Green, 128 GB)  (8 GB RAM)</h1>

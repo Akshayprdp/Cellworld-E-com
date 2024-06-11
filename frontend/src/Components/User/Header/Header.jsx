@@ -1,10 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Header.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart, faList, faHeart, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const storedUsername = localStorage.getItem('username'); // Retrieve the username from local storage
+    if (token) {
+      try {
+        // Update state with the retrieved username
+        setUsername(storedUsername);
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error("Invalid token");
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username'); // Remove username from local storage upon logout
+    setIsLoggedIn(false);
+    setUsername('');
+    navigate('/');
+  };
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-dark-tertiary">
@@ -42,24 +68,36 @@ function Header() {
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <FontAwesomeIcon icon={faUser} />
-                  Profile
+                  {isLoggedIn ? username : 'Profile'}
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li>
-                    <Link className="dropdown-item" to="/profile">
-                      <FontAwesomeIcon icon={faUser} /> Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/login">
-                      <FontAwesomeIcon icon={faUser} /> Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/signup">
-                      <FontAwesomeIcon icon={faUserPlus} /> Signup
-                    </Link>
-                  </li>
+                  {isLoggedIn ? (
+                    <>
+                      <li>
+                        <Link className="dropdown-item" to="/profile">
+                          <FontAwesomeIcon icon={faUser} /> Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <button className="dropdown-item" onClick={handleLogout}>
+                          <FontAwesomeIcon icon={faUser} /> Logout
+                        </button>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <Link className="dropdown-item" to="/login">
+                          <FontAwesomeIcon icon={faUser} /> Login
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/signup">
+                          <FontAwesomeIcon icon={faUserPlus} /> Signup
+                        </Link>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </li>
             </ul>
