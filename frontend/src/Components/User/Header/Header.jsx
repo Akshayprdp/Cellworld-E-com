@@ -11,10 +11,11 @@ function Header() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const storedUsername = localStorage.getItem('username'); // Retrieve the username from local storage
+    const storedUsername = localStorage.getItem('username');
+
     if (token) {
       try {
-        // Update state with the retrieved username
+        
         setUsername(storedUsername);
         setIsLoggedIn(true);
       } catch (error) {
@@ -25,10 +26,17 @@ function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('username'); // Remove username from local storage upon logout
+    localStorage.removeItem('username'); 
     setIsLoggedIn(false);
     setUsername('');
     navigate('/');
+  };
+
+  const handleProtectedNavigation = (e, path) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      navigate('/login');
+    }
   };
 
   return (
@@ -48,19 +56,19 @@ function Header() {
             </ul>
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/category">
+                <Link className="nav-link active" aria-current="page" to="/category" onClick={(e) => handleProtectedNavigation(e, '/category')}>
                   <FontAwesomeIcon icon={faList} />
                   Category
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/wishlist">
+                <Link className="nav-link active" aria-current="page" to="/wishlist" onClick={(e) => handleProtectedNavigation(e, '/wishlist')}>
                   <FontAwesomeIcon icon={faHeart} />
                   Wishlist
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/cart">
+                <Link className="nav-link active" aria-current="page" to="/cart" onClick={(e) => handleProtectedNavigation(e, '/cart')}>
                   <FontAwesomeIcon icon={faShoppingCart} />
                   Cart
                 </Link>

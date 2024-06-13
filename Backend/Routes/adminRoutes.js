@@ -1,13 +1,13 @@
-const express =require("express")
-const { userList } = require("../Controllers/adminController")
-const router = express.Router()
-
-
-router.get("/users", userList);
+const express = require("express");
+const router = express.Router();
+const { adminLogin } = require('../Controllers/adminController');
 
 
 
+router.post('/adminlogin', adminLogin);
 
 
 
-module.exports=router
+
+module.exports = router;
+

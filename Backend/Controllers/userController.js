@@ -2,8 +2,7 @@
 const jwt = require('jsonwebtoken');
 const userModel = require("../Model/userModel");
 const bcrypt = require("bcrypt");
-
-const secretKey = "your_secret_key"; // Use a secure key in a real application
+const secretKey = "your_secret_key"; 
 
 module.exports.signup = async (req, res) => {
     try {
@@ -40,7 +39,7 @@ module.exports.login = async (req, res) => {
             const auth = await bcrypt.compare(Password, customer.Password);
             if (auth) {
                 const token = jwt.sign({ id: customer._id }, secretKey, { expiresIn: '1h' });
-                return res.json({ message: "Login successful", success: true, token, username: customer.username }); // Include the username in the response
+                return res.json({ message: "Login successful", success: true, token, username: customer.username, Emailaddress:customer.Emailaddress, Phonenumber:customer.Phonenumber, }); // Include the username in the response
             } else {
                 return res.json({ message: "Incorrect password", success: false });
             }

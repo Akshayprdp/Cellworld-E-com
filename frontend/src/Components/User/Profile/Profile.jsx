@@ -1,14 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Profile.css';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
   const [userInfo, setUserInfo] = useState({
-    username: 'JohnDoe',
-    email: 'johndoe@example.com',
+    username: '',
+    email: '',
     password: '',
     confirmPassword: '',
-    phone: '123-456-7890',
+    phone: '',
   });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const storedUsername = localStorage.getItem('username');
+    const storedEmail = localStorage.getItem('Emailaddress');
+    const storedPhone = localStorage.getItem('Phonenumber');
+  
+    console.log('Stored Email:', storedEmail);
+    console.log('Stored Phone:', storedPhone);
+    console.log('Stored username:', storedUsername);
+  
+    if (!token) {
+      navigate('/login');
+    } else {
+      setUserInfo({
+        username: storedUsername || '',
+        email: storedEmail || '',
+        password: '',
+        confirmPassword: '',
+        phone: storedPhone || '',
+      });
+    }
+  }, [navigate]);
+  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -29,18 +29,23 @@ function Login() {
         try {
             const response = await userLogin(values);
             if (response.data.success) {
+                const { token, username, Emailaddress, Phonenumber } = response.data;  // Destructure username and token only
+                console.log(`responsee${response.data}`)
                 toast.success(response.data.message);
-                localStorage.setItem('token', response.data.token); 
-                localStorage.setItem('username', response.data.username); 
-                setIsLoggedIn(true);
-                navigate('/');
+                localStorage.setItem('token', token);
+                localStorage.setItem('username', username);
+                localStorage.setItem('Emailaddress', Emailaddress); // Set email in localStorage
+                localStorage.setItem('Phonenumber', Phonenumber); 
+                navigate('/'); // Navigate to homepage after successful login
             } else {
-                toast.error(response.data.message);
+                toast.error(response.data.message); // Display error message if login fails
             }
         } catch (error) {
             console.error("There was an error logging in!", error);
+            toast.error("An unexpected error occurred. Please try again later.");
         }
     }
+    
     
     
     const formik = useFormik({

@@ -8,6 +8,7 @@ import Categorypage from '../Pages/Admin/Categorypage'
 
 import Producteditpage from '../Pages/Admin/Producteditpage'
 
+
 function Adminrouter() {
   return (
     <div>
@@ -19,6 +20,7 @@ function Adminrouter() {
         <Route path='/userlist' element={<Userlistpage/>}/>
         <Route path='/category' element={<Categorypage/>}/>
         <Route path='/productedit' element={<Producteditpage/>}/>
+        
       </Routes>
       
     </div>
