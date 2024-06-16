@@ -2,6 +2,8 @@ import React from 'react';
 import './Productadd.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { productadd } from '../../../Services/AdminApi'; // Add this import
+import { toast } from 'react-toastify';
 
 function Productadd() {
   const initialValues = {
@@ -14,8 +16,8 @@ function Productadd() {
 
   const validationSchema = yup.object().shape({
     productName: yup.string().required('Product name is required'),
-    description: yup.string().required('Description is required').min(10,"minimum 10 letters needed"),
-    price: yup.string()  
+    description: yup.string().required('Description is required').min(10, "Minimum 10 letters needed"),
+    price: yup.string()
       .required('Price is required')
       .test('is-rupees', 'Price must start with ₹', value => value && value.startsWith('₹'))
       .test('is-valid-amount', 'Price must be a valid positive number after ₹', value => {
@@ -29,8 +31,24 @@ function Productadd() {
     imageFile: yup.mixed().required('Image is required'),
   });
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const onSubmit = async (values) => {
+    try {
+      const formData = new FormData();
+      formData.append('productName', values.productName);
+      formData.append('description', values.description);
+      formData.append('price', values.price);
+      formData.append('category', values.category);
+      formData.append('imageFile', values.imageFile);
+
+      const response = await productadd(formData);
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error('An error occurred while adding the product');
+    }
   };
 
   const formik = useFormik({
@@ -42,7 +60,7 @@ function Productadd() {
   return (
     <div className="product-add-container">
       <div className="form-heading">
-      <h2>Add New Product</h2>
+        <h2>Add New Product</h2>
       </div>
       <div className="form-container-add">
         <form onSubmit={formik.handleSubmit}>

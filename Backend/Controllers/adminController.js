@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const adminModel = require('../Model/adminModel');
 const secretKey = 'your_secret_key'; 
+const userModel = require('../Model/userModel')
+const Product =require('../Model/adminModel')
 
 const adminLogin = async (req, res) => {
     try {
@@ -40,3 +42,42 @@ const adminLogin = async (req, res) => {
 module.exports = {
     adminLogin
 };
+
+
+module.exports.userList = async (req, res, ) => {
+    try {
+      const userlist = await userModel.find();
+      if (userlist) {
+        res.json({ status: true, userlist });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  module.exports.productadd=async(req,res)=>{
+    try {
+        const { productName, description, price, category } = req.body;
+    
+        if (!req.file) {
+          return res.status(400).json({ message: 'Image file is required', success: false });
+        }
+    
+        const newProduct = new Product({
+          productName,
+          description,
+          price: parseFloat(price.slice(1)), // Remove currency symbol and convert to number
+          category,
+          imageUrl: `/uploads/${req.file.filename}`, // Store image URL
+        });
+    
+        await newProduct.save();
+    
+        return res.json({ message: 'Product added successfully', success: true });
+      } catch (error) {
+        console.error('Error adding product:', error);
+        return res.status(500).json({ message: 'An error occurred', success: false });
+      }
+    };
+  

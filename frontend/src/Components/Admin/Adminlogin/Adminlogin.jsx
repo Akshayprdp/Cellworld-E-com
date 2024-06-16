@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Adminlogin.css';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -8,17 +8,24 @@ import { useNavigate } from 'react-router-dom';
 
 function Adminlogin() {
     const navigate = useNavigate();
+    const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const username = localStorage.getItem('username');
+        if (token && username === 'Admin') {
+            setIsAdminLoggedIn(true);
+        }
+    }, []);
 
     const initialValues = {
-        adminUsername: "",
-        adminPassword: "",
+        adminUsername: isAdminLoggedIn ? "Admin" : "",
+        adminPassword: isAdminLoggedIn ? "*********" : "",
     };
 
     const validationSchema = yup.object().shape({
-        adminUsername: yup.string()
-            .required('Admin username required'),
-        adminPassword: yup.string()
-            .required("Admin password required"),
+        adminUsername: yup.string().required('Admin username required'),
+        adminPassword: yup.string().required("Admin password required"),
     });
 
     async function onSubmit(values) {
@@ -31,6 +38,7 @@ function Adminlogin() {
                 localStorage.setItem('username', username);
                 localStorage.setItem('Emailaddress', Emailaddress);
                 localStorage.setItem('Phonenumber', Phonenumber);
+                setIsAdminLoggedIn(true);
                 navigate('/admin');
             } else {
                 toast.error(response.data.message);
@@ -41,10 +49,19 @@ function Adminlogin() {
         }
     }
 
+    const handleLogOff = () => {
+        localStorage.clear();
+        setIsAdminLoggedIn(false);
+        formik.resetForm();
+        toast.success("Logged off successfully");
+        navigate('/admin');
+    };
+
     const formik = useFormik({
         initialValues,
         validationSchema,
         onSubmit,
+        enableReinitialize: true,
     });
 
     return (
@@ -64,6 +81,7 @@ function Adminlogin() {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.adminUsername}
+                                disabled={isAdminLoggedIn}
                             />
                             {formik.touched.adminUsername && formik.errors.adminUsername ? (
                                 <div className="error">{formik.errors.adminUsername}</div>
@@ -81,6 +99,7 @@ function Adminlogin() {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.adminPassword}
+                                disabled={isAdminLoggedIn}
                             />
                             {formik.touched.adminPassword && formik.errors.adminPassword ? (
                                 <div className="error">{formik.errors.adminPassword}</div>
@@ -88,9 +107,11 @@ function Adminlogin() {
                         </div>
                         <br />
                         <div className='button'>
-                            <button type="submit" className="btn btn-primary">Admin Login</button>
-                        </div>
-                        <div style={{ marginTop: '10px' }}>
+                            {isAdminLoggedIn ? (
+                                <button type="button" className="btn btn-primary" onClick={handleLogOff}>Log out</button>
+                            ) : (
+                                <button type="submit" className="btn btn-primary">Admin Login</button>
+                            )}
                         </div>
                     </form>
                 </center>

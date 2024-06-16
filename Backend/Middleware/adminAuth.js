@@ -8,6 +8,11 @@ module.exports = (req, res, next) => {
     }
     try {
         const decoded = jwt.verify(token, secretKey);
+        
+        if (!decoded.isAdmin) {
+            return res.status(403).json({ message: "Access denied. Admin privileges required." });
+        }
+        
         req.user = decoded;
         next();
     } catch (error) {

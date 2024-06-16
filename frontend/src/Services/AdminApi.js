@@ -8,3 +8,7 @@ export const getUserList = () => {
 export const adminLogin = (values) => {
   return adminInstance.post("/adminlogin", values);
 };
+
+export const productadd=(values)=>{
+  return adminInstance.post("/productadd",values);
+}
