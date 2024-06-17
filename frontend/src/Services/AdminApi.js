@@ -12,3 +12,7 @@ export const adminLogin = (values) => {
 export const productadd=(values)=>{
   return adminInstance.post("/productadd",values);
 }
+
+export const getproductlist = () => {
+  return adminInstance.get('/productlist');
+};

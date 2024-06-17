@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Productlist.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faBan } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { getproductlist } from '../../../Services/AdminApi';
 
-function Productlist() {
+
+const Productlist=()=>{
+  const[productlist,setproductlist]=useState([])
+
+  useEffect(()=>{
+    const fetchproducts=async()=>{
+      try{
+        const response=await getproductlist()
+        setproductlist(response.data.productlist)
+      }catch(error){
+        console.error('error fetching productdata',error)
+      }
+    }
+    fetchproducts()
+  })
+
+
+
   return (
     <div className="product-list">
       <div className="product-list-container">
@@ -18,10 +36,11 @@ function Productlist() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Product 1</td>
+            {productlist.map(product=>(
+            <tr key={product._id}>
+              <td>{product.productName}</td>
               <td>10</td>
-              <td>$100</td>
+              <td>{product.price}</td>
               <td>
               <Link to="/admin/productedit">
                     <button className="edit-button">
@@ -33,111 +52,7 @@ function Productlist() {
                 </button>
               </td>
             </tr>
-            <tr>
-              <td>Product 2</td>
-              <td>15</td>
-              <td>$150</td>
-              <td>
-              <Link to="/admin/productedit">
-                    <button className="edit-button">
-                      <FontAwesomeIcon icon={faEdit} /> Edit
-                    </button>
-                  </Link>
-                <button className="dis-button">
-                  <FontAwesomeIcon icon={faBan} />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Product 3</td>
-              <td>20</td>
-              <td>$200</td>
-              <td>
-              <Link to="/admin/productedit">
-                    <button className="edit-button">
-                      <FontAwesomeIcon icon={faEdit} /> Edit
-                    </button>
-                  </Link>
-                <button className="dis-button">
-                  <FontAwesomeIcon icon={faBan} />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Product 4</td>
-              <td>25</td>
-              <td>$250</td>
-              <td>
-              <Link to="/admin/productedit">
-                    <button className="edit-button">
-                      <FontAwesomeIcon icon={faEdit} /> Edit
-                    </button>
-                  </Link>
-                <button className="dis-button">
-                  <FontAwesomeIcon icon={faBan} />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Product 5</td>
-              <td>30</td>
-              <td>$300</td>
-              <td>
-              <Link to="/admin/productedit">
-                    <button className="edit-button">
-                      <FontAwesomeIcon icon={faEdit} /> Edit
-                    </button>
-                  </Link>
-                <button className="dis-button">
-                  <FontAwesomeIcon icon={faBan} />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Product 6</td>
-              <td>35</td>
-              <td>$350</td>
-              <td>
-              <Link to="/admin/productedit">
-                    <button className="edit-button">
-                      <FontAwesomeIcon icon={faEdit} /> Edit
-                    </button>
-                  </Link>
-                <button className="dis-button">
-                  <FontAwesomeIcon icon={faBan} />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Product 7</td>
-              <td>40</td>
-              <td>$400</td>
-              <td>
-              <Link to="/admin/productedit">
-                    <button className="edit-button">
-                      <FontAwesomeIcon icon={faEdit} /> Edit
-                    </button>
-                  </Link>
-                <button className="dis-button">
-                  <FontAwesomeIcon icon={faBan} />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Product 8</td>
-              <td>45</td>
-              <td>$450</td>
-              <td>
-              <Link to="/admin/productedit">
-                    <button className="edit-button">
-                      <FontAwesomeIcon icon={faEdit} /> Edit
-                    </button>
-                  </Link>
-                <button className="dis-button">
-                  <FontAwesomeIcon icon={faBan} />
-                </button>
-              </td>
-            </tr>
+))}
           </tbody>
         </table>
       </div>
