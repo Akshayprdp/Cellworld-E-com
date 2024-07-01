@@ -1,81 +1,55 @@
-import React from 'react';
-import "./List.css"
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getproducts } from '../../../Services/UserApi';
+import "./List.css";
 
-function List() {
+const List = () => {
+  const { category } = useParams();
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getproducts();
+        if (response.data.status) {
+          const filteredProducts = response.data.products.filter(product => product.category === category);
+          setProducts(filteredProducts);
+        } else {
+          console.error("No products found");
+        }
+      } catch (error) {
+        console.error("Error fetching products", error);
+      }
+    };
+    fetchProducts();
+  }, [category]);
+
   return (
     <div>
-      <div className='main-div'>
-        <div className='main-div2'>
-          <div className='picture'>
-            <img src="" alt="Product Image" />
-          </div>
-          <div className='DandN'>
-            <h1>Motorola G34 5G (Ocean Green, 128 GB)  (8 GB RAM)</h1>
-            <p className='description'>
-              Discover the realme P1 5G, which offers strong performance and flawless connectivity thanks to the contemporary MediaTek Dimensity 7050 5G Chipset and Smart 5G features. Immerse yourself in vivid images on the 120Hz AMOLED display, which is supplemented with features like fingerprint recognition within the display and Sunlight Screen technology for readable content outside. With the 7-layer VC Cooling System, you can operate at the highest level without worrying about overheating when things get hot. With unparalleled performance and dependability, the realme P1 5G has a four-year smooth user experience guaranteed by TUV SUD certification, making it your reliable friend for years to come.
-            </p>
-          </div>
-          <div>
-            <p className='Listprice'>₹20000</p>
-            <div>
-            <h1 className='List-bankoffer'>Bank offer</h1>
-            <p className='List-EMI'>No cost EMI avilable</p>
+      {products.map(product => (
+        <div className='main-div' key={product._id}>
+          <div className='main-div2'>
+            <div className='picture'>
+              <img src={`http://localhost:4000${product.imageUrl}`} alt="Product Image" />
             </div>
-            <div className='List-Buttondiv'>
-            <button className='List-Buy-now'>Buy Now</button>
-            <button className='List-Addtocart'>Add to Cart</button>
+            <div className='DandN'>
+              <h1>{product.productName}</h1><br />
+              <p className='description'>{product.description}</p>
+            </div>
+            <div>
+              <p className='Listprice'>₹{product.price}</p>
+              <div>
+                <h1 className='List-bankoffer'>Bank offer</h1>
+                <p className='List-EMI'>No cost EMI available</p>
+              </div>
+              <div className='List-Buttondiv'>
+                <button className='List-Buy-now'>Buy Now</button>
+                <button className='List-Addtocart'>Add to Cart</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className='main-div'>
-        <div className='main-div2'>
-          <div className='picture'>
-            <img src="E:\MERN\my-react-app\frontend\public\Images\ONE-PLUS-NORD-CE-2-LITE-5G-BLUE-TIDE-6GB128GB-300x300.png" alt="Product Image" />
-          </div>
-          <div className='DandN'>
-            <h1>Motorola G34 5G (Ocean Green, 128 GB)  (8 GB RAM)</h1>
-            <p className='description'>
-              Discover the realme P1 5G, which offers strong performance and flawless connectivity thanks to the contemporary MediaTek Dimensity 7050 5G Chipset and Smart 5G features. Immerse yourself in vivid images on the 120Hz AMOLED display, which is supplemented with features like fingerprint recognition within the display and Sunlight Screen technology for readable content outside. With the 7-layer VC Cooling System, you can operate at the highest level without worrying about overheating when things get hot. With unparalleled performance and dependability, the realme P1 5G has a four-year smooth user experience guaranteed by TUV SUD certification, making it your reliable friend for years to come.
-            </p>
-          </div>
-          <div>
-            <p className='Listprice'>₹20000</p>
-            <div>
-            <h1 className='List-bankoffer'>Bank offer</h1>
-            <p className='List-EMI'>No cost EMI avilable</p>
-            </div>
-            <div className='List-Buttondiv'>
-            <button className='List-Buy-now'>Buy Now</button>
-            <button className='List-Addtocart'>Add to Cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className='main-div'>
-        <div className='main-div2'>
-          <div className='picture'>
-            <img src="" alt="Product Image" />
-          </div>
-          <div className='DandN'>
-            <h1>Motorola G34 5G (Ocean Green, 128 GB)  (8 GB RAM)</h1>
-            <p className='description'>
-              Discover the realme P1 5G, which offers strong performance and flawless connectivity thanks to the contemporary MediaTek Dimensity 7050 5G Chipset and Smart 5G features. Immerse yourself in vivid images on the 120Hz AMOLED display, which is supplemented with features like fingerprint recognition within the display and Sunlight Screen technology for readable content outside. With the 7-layer VC Cooling System, you can operate at the highest level without worrying about overheating when things get hot. With unparalleled performance and dependability, the realme P1 5G has a four-year smooth user experience guaranteed by TUV SUD certification, making it your reliable friend for years to come.
-            </p>
-          </div>
-          <div>
-            <p className='Listprice'>₹20000</p>
-            <div>
-            <h1 className='List-bankoffer'>Bank offer</h1>
-            <p className='List-EMI'>No cost EMI avilable</p>
-            </div>
-            <div className='List-Buttondiv'>
-            <button className='List-Buy-now'>Buy Now</button>
-            <button className='List-Addtocart'>Add to Cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }

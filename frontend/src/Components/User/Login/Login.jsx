@@ -29,16 +29,16 @@ function Login() {
         try {
             const response = await userLogin(values);
             if (response.data.success) {
-                const { token, username, Emailaddress, Phonenumber } = response.data;  // Destructure username and token only
+                const { token, username, Emailaddress, Phonenumber } = response.data;  
                 console.log(`responsee${response.data}`)
                 toast.success(response.data.message);
                 localStorage.setItem('token', token);
                 localStorage.setItem('username', username);
-                localStorage.setItem('Emailaddress', Emailaddress); // Set email in localStorage
+                localStorage.setItem('Emailaddress', Emailaddress); 
                 localStorage.setItem('Phonenumber', Phonenumber); 
-                navigate('/'); // Navigate to homepage after successful login
+                navigate('/'); 
             } else {
-                toast.error(response.data.message); // Display error message if login fails
+                toast.error(response.data.message); 
             }
         } catch (error) {
             console.error("There was an error logging in!", error);

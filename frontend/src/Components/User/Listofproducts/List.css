@@ -1,64 +1,76 @@
 .main-div {
-    background-color: #EFF1F4;
-    height: auto;
-    width: 100%;
-  }
-  
-  .main-div2 {
-    background-color: rgb(255, 254, 254);
-    padding: 20px;
-    height: 300px;
-    width: 1300px;
-    margin-left: 7%;
-  }
-  
-  .picture {
-    width: 230px;
-    height: 230px;
-    background-size: cover;
-    background-position: center;
-  }
-  
-  .description {
-    text-overflow: ellipsis;
-    line-height: 1.5em;
-    margin-top: 15px;
-    max-width: 500px;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  .DandN {
-    margin-left: 300px;
-    margin-top: -230px;
-  }
-  .Listprice{
-    margin-left: 1050px;
-    margin-top: -190px;
-    font-size:35px;
-  }
-  .List-Buy-now{
-    margin-left: 950px;
-    width: 150px;
-    margin-top: 120px;
-  }
-  .List-Addtocart{
-    margin-left: 10px;
-    width: 150px;
-    
-  }
-  .List-bankoffer{
-    color:rgb(20, 189, 26);
-    margin-left: 1050px;
-    margin-top: -10px;
-    font-size: 20px;
-  }
-  .List-EMI{
-    color: rgb(34, 32, 32);
-    margin-left: 1050px;
-  }
-  .List-Buttondiv{
-    margin-top: -50px;
-  }
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.main-div2 {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.picture img {
+  max-width: 200px;
+  border-radius: 5px;
+}
+
+.DandN {
+  flex-grow: 1;
+  margin-left: 20px;
+  margin-right: 100px;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 6; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 9em; /* 1.5em (line-height) * 6 lines */
+  line-height: 1.5em; /* Adjust line-height if needed */
+  margin-bottom: 20px; /* Add gap between description and price div */
+}
+
+.Listprice {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.List-bankoffer {
+  font-size: 18px;
+  color: green;
+  margin-top: 10px;
+}
+
+.List-EMI {
+  font-size: 16px;
+  color: #555;
+}
+
+.List-Buttondiv {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-right: 50px;
+}
+
+.List-Buy-now,
+.List-Addtocart {
+  background-color: #343333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    height: 40px;
+    width: 110px;
+}
+
+.List-Buy-now:hover,
+.List-Addtocart:hover {
+  background-color: #272727; /* Darker shade on hover */
+}

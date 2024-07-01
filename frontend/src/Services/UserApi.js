@@ -9,9 +9,6 @@ export const userLogin = (values) => {
     return userInstance.post("/login", { ...values });
 };
 
-
-
-
 export const authenticatedRequest = async (method, url, data) => {
     const token = localStorage.getItem('token');
     const config = {
@@ -19,3 +16,7 @@ export const authenticatedRequest = async (method, url, data) => {
     };
     return await axios({ method, url, data, ...config });
 };
+
+export const getproducts = () => {
+    return userInstance.get('/products');
+  };

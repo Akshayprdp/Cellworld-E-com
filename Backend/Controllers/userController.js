@@ -2,7 +2,9 @@
 const jwt = require('jsonwebtoken');
 const userModel = require("../Model/userModel");
 const bcrypt = require("bcrypt");
-const secretKey = "your_secret_key"; 
+const secretKey = "your_secret_key";
+const productaddModel=require('../Model/productaddModel')
+
 
 module.exports.signup = async (req, res) => {
     try {
@@ -52,3 +54,16 @@ module.exports.login = async (req, res) => {
     }
 };
 
+module.exports.products = async (req, res) => {
+    try {
+      const products = await productaddModel.find();
+      if (products) {
+        res.json({ status: true, products });
+      } else {
+        res.json({ status: false, message: "No products found" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ status: false, message: "Server error" });
+    }
+  };

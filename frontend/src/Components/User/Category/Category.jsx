@@ -1,76 +1,82 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Category.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { getproducts } from '../../../Services/UserApi';
 
+const Category = () => {
+  const [products, setProducts] = useState([]);
+  const [androidProducts, setAndroidProducts] = useState([]);
+  const [appleProducts, setAppleProducts] = useState([]);
+  const navigate = useNavigate();
 
-function Category() {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getproducts();
+        if (response.data.status) {
+          setProducts(response.data.products);
+          setAndroidProducts(response.data.products.filter(product => product.category === 'android'));
+          setAppleProducts(response.data.products.filter(product => product.category === 'apple'));
+        } else {
+          console.error("No products found");
+        }
+      } catch (error) {
+        console.error("Error fetching products", error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const handleCategoryClick = (category) => {
+    navigate(`/list/${category}`);
+  };
+
   return (
     <div className="category-container">
       <div className="category-box">
-        <h2>Android Phones</h2>
+        <h2 onClick={() => handleCategoryClick('android')} className='AandA'>Android Phones</h2>
         <div className="products-list">
-          {/* Rendering Android phone products */}
-          <div className="product-item">
-            <img className="product-pic" src="https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Android Phone 1" />
-            <h3>Android Phone 1</h3>
-            <div className="product-rating">
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
+          {androidProducts.map(product => (
+            <div className="product-item" key={product._id}>
+              <img className="product-pic" src={`http://localhost:4000${product.imageUrl}`} alt={product.productName} />
+              <h3>{product.productName}</h3>
+              <div className="product-rating">
+                <FontAwesomeIcon icon={faStar} />
+                <FontAwesomeIcon icon={faStar} />
+                <FontAwesomeIcon icon={faStar} />
+                <FontAwesomeIcon icon={faStar} />
+                <FontAwesomeIcon icon={faStar} />
+              </div>
+              <p className="product-price">₹{product.price}</p>
+              {/* <button className="details-button">View Details</button> */}
             </div>
-            <p className="product-price">$199.99</p>
-            <button className="details-button">View Details</button>
-          </div>
-          <div className="product-item">
-            <img className="product-pic" src="https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Android Phone 2" />
-            <h3>Android Phone 2</h3>
-            <div className="product-rating">
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-            </div>
-            <p className="product-price">$249.99</p>
-            <button className="details-button">View Details</button>
-          </div>
+          ))}
         </div>
       </div>
       <div className="category-box">
-        <h2>Apple Phones</h2>
+        <h2 onClick={() => handleCategoryClick('apple')} className='AandA'>Apple Phones</h2>
         <div className="products-list">
-          {/* Rendering Apple phone products */}
-          <div className="product-item">
-            <img className="product-pic" src="https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Apple Phone 1" />
-            <h3>Apple Phone 1</h3>
-            <div className="product-rating">
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
+          {appleProducts.map(product => (
+            <div className="product-item" key={product._id}>
+              <img className="product-pic" src={`http://localhost:4000${product.imageUrl}`} alt={product.productName} />
+              <h3>{product.productName}</h3>
+              <div className="product-rating">
+                <FontAwesomeIcon icon={faStar} />
+                <FontAwesomeIcon icon={faStar} />
+                <FontAwesomeIcon icon={faStar} />
+                <FontAwesomeIcon icon={faStar} />
+                <FontAwesomeIcon icon={faStar} />
+              </div>
+              <p className="product-price">₹{product.price}</p>
+              {/* <button className="details-button">View Details</button> */}
             </div>
-            <p className="product-price">$699.99</p>
-            <button className="details-button">View Details</button>
-          </div>
-          <div className="product-item">
-            <img className="product-pic" src="https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Apple Phone 2" />
-            <h3>Apple Phone 2</h3>
-            <div className="product-rating">
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-            </div>
-            <p className="product-price">$799.99</p>
-            <button className="details-button">View Details</button>
-          </div>
+          ))}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Category;

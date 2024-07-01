@@ -16,6 +16,7 @@ app.use(cors())
 
 app.use("/",userRoutes)
 app.use("/admin",adminRoutes)
+app.use('/uploads', express.static('uploads'));
 
 
 
