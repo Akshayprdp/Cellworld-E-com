@@ -1,17 +1,44 @@
-import React from 'react'
-import "./Singleproduct.css"
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import "./Singleproduct.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faShoppingCart, faCreditCard, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { getProductById } from '../../../Services/UserApi';
 
 function Singleproduct() {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await getProductById(id);
+        if (response.data.status) {
+          setProduct(response.data.product);
+        } else {
+          console.error("Product not found");
+        }
+      } catch (error) {
+        console.error("Error fetching product", error);
+      }
+    };
+    fetchProduct();
+  }, [id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+
+  const trimmedDescription = product.description.split(' ').slice(0, 100).join(' ') + (product.description.split(' ').length > 100 ? '...' : '');
+
   return (
     <div className='wrap0'>
       <div className='wrap1'>
         <div className='wrap2'>
-          <h2 className='model'>Phone Model</h2>
+          <h2 className='model'>{product.productName}</h2>
           <div className='image'>
-            <img className="product-image" src='https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt="Phone" />
+            <img className="product-image" src={`http://localhost:4000${product.imageUrl}`} alt={product.productName} />
           </div>
           <div className="rating-single">
             <FontAwesomeIcon icon={faStar} />
@@ -22,7 +49,7 @@ function Singleproduct() {
           </div>
           <div>
             <p className='price-single'>Special price :</p>
-            <p className="special-price">$299.99 </p><p><span className="original-price">$399.99</span></p>
+            <p className="special-price">₹{product.price}</p>
           </div>
           <Link to="/wishlist" className="wishlist-link">
             <FontAwesomeIcon icon={faHeart} className="wishlist-icon" />
@@ -36,37 +63,21 @@ function Singleproduct() {
             </button>
           </Link>
           <p className="item-description">
-            Discover the realme P1 5G, which offers strong performance and flawless connectivity thanks to the contemporary MediaTek Dimensity 7050 5G Chipset and Smart 5G features. Immerse yourself in vivid images on the 120Hz AMOLED display, which is supplemented with features like fingerprint recognition within the display and Sunlight Screen technology for readable content outside. With the 7-layer VC Cooling System, you can operate at the highest level without worrying about overheating when things get hot. With unparalleled performance and dependability, the realme P1 5G has a four-year smooth user experience guaranteed by TUV SUD certification, making it your reliable friend for years to come.
+            {trimmedDescription}
           </p>
           <div className="bank-offers">
             <h1>Available offers</h1>
             <br />
-            <ul >
+            <ul>
               <li>10% off on XYZ Bank Credit Cards</li>
               <li>5% cashback with ABC Bank Debit Cards</li>
               <li>No Cost EMI available</li>
             </ul>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Singleproduct
+export default Singleproduct;

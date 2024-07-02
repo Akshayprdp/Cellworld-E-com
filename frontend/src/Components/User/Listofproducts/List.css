@@ -74,3 +74,6 @@
 .List-Addtocart:hover {
   background-color: #272727; /* Darker shade on hover */
 }
+.listname{
+  text-decoration: none;
+}

@@ -17,7 +17,7 @@ function Userrouter() {
         <Route path='/login' element={<Loginpage />} />
         <Route path='/signup' element={<Registrationpage />} />
         <Route path='/' element={<Homepage />} />
-        <Route path='/spp' element={<Singleproductlistpage />} />
+        <Route path='/product/:id' element={<Singleproductlistpage />} />
         <Route path='/cart' element={<Cartpage />} />
         <Route path='/category' element={<Categorypage />} />
         <Route path='/wishlist' element={<Wishlistpage />} />

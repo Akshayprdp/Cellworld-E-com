@@ -29,28 +29,32 @@ const PhoneStore = () => {
     <div className="carousel__image-container">
       <Container className="phone-store-container">
         <Row>
-          {products.map(product => {
-            return (
-              <Col key={product._id} sm={12} md={6} lg={3}>
-                <Card className="phone-card">
+          {products.map(product => (
+            <Col key={product._id} sm={12} md={6} lg={3}>
+              <Card className="phone-card">
+                <Link to={`/product/${product._id}`}>
                   <Card.Img variant="top" src={`http://localhost:4000${product.imageUrl}`} alt={product.productName} />
-                  <div className="wishlist-icon-store">
-                    <Link to="/wishlist" className="wishlist-link-store">
-                      <FontAwesomeIcon icon={faHeart} className="Store-Wishlisticon" />
+                </Link>
+                <div className="wishlist-icon-store">
+                  <Link to="/wishlist" className="wishlist-link-store">
+                    <FontAwesomeIcon icon={faHeart} className="Store-Wishlisticon" />
+                  </Link>
+                </div>
+                <Card.Body>
+                <Link to={`/product/${product._id}`} className='storelink'>
+                  <Card.Title>{product.productName}</Card.Title>
+                  </Link>
+                  <Card.Text>₹{product.price}</Card.Text>
+                  <div className="button-container">
+                    <Button variant="primary" className="cart-button-store">Add to Cart</Button>
+                    <Link to={`/product/${product._id}`} className='storelinkbutton'>
+                      <Button variant="secondary" className="purchase-button-store">Buy Now</Button>
                     </Link>
                   </div>
-                  <Card.Body>
-                    <Card.Title>{product.productName}</Card.Title>
-                    <Card.Text>₹{product.price}</Card.Text>
-                    <div className="button-container">
-                      <Button variant="primary" className="cart-button-store">Add to Cart</Button>
-                      <Button variant="secondary" className="purchase-button-store">Buy Now</Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
         </Row>
       </Container>
     </div>

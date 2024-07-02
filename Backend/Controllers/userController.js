@@ -67,3 +67,17 @@ module.exports.products = async (req, res) => {
       res.status(500).json({ status: false, message: "Server error" });
     }
   };
+
+  module.exports.getProductById = async (req, res) => {
+    try {
+      const product = await productaddModel.findById(req.params.id);
+      if (product) {
+        res.json({ status: true, product });
+      } else {
+        res.json({ status: false, message: "Product not found" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ status: false, message: "Server error" });
+    }
+  };
