@@ -32,7 +32,7 @@ function Login() {
                 const { token, username, Emailaddress, Phonenumber } = response.data;  
                 console.log(`responsee${response.data}`)
                 toast.success(response.data.message);
-                localStorage.setItem('token', token);
+                localStorage.setItem('jwt', token);
                 localStorage.setItem('username', username);
                 localStorage.setItem('Emailaddress', Emailaddress); 
                 localStorage.setItem('Phonenumber', Phonenumber); 

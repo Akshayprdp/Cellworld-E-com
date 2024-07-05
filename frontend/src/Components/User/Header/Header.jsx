@@ -10,7 +10,7 @@ function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwt');
     const storedUsername = localStorage.getItem('username');
 
     if (token) {
@@ -25,7 +25,7 @@ function Header() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt');
     localStorage.removeItem('username'); 
     setIsLoggedIn(false);
     setUsername('');

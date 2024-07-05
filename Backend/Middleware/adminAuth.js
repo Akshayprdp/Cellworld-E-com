@@ -7,8 +7,8 @@ module.exports = (req, res, next) => {
         return res.status(401).json({ message: "Access denied. No token provided." });
     }
     try {
-        const decoded = jwt.verify(token, secretKey);
-        
+        // const decoded = jwt.verify(token, secretKey);
+        const decoded = jwt.verify(token, "adminJWT");
         if (!decoded.isAdmin) {
             return res.status(403).json({ message: "Access denied. Admin privileges required." });
         }

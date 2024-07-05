@@ -9,7 +9,7 @@ router.post("/signup",signup)
 router.post('/login', login);
 router.get('/products',products)
 router.get("/products/:id", getProductById);
-
+router.post('/signup',signup)
 
 module.exports=router
 

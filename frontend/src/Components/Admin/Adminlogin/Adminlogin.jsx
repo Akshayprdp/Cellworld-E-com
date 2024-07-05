@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Adminlogin.css';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { adminLogin } from '../../../Services/AdminApi'; // Implement this service
+import { adminLogin } from '../../../Services/AdminApi'; 
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,16 +11,15 @@ function Adminlogin() {
     const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const username = localStorage.getItem('username');
-        if (token && username === 'Admin') {
+        const adminToken = localStorage.getItem('adminJWT');
+        if (adminToken) {
             setIsAdminLoggedIn(true);
         }
     }, []);
 
     const initialValues = {
         adminUsername: isAdminLoggedIn ? "Admin" : "",
-        adminPassword: isAdminLoggedIn ? "*********" : "",
+        adminPassword: isAdminLoggedIn ? "Admin@123" : "",
     };
 
     const validationSchema = yup.object().shape({
@@ -34,7 +33,7 @@ function Adminlogin() {
             if (response.data.success) {
                 const { token, username, Emailaddress, Phonenumber } = response.data;
                 toast.success(response.data.message);
-                localStorage.setItem('token', token);
+                localStorage.setItem('adminJWT', token);
                 localStorage.setItem('username', username);
                 localStorage.setItem('Emailaddress', Emailaddress);
                 localStorage.setItem('Phonenumber', Phonenumber);
@@ -50,7 +49,7 @@ function Adminlogin() {
     }
 
     const handleLogOff = () => {
-        localStorage.clear();
+        localStorage.removeItem('adminJWT');
         setIsAdminLoggedIn(false);
         formik.resetForm();
         toast.success("Logged off successfully");
@@ -81,6 +80,7 @@ function Adminlogin() {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.adminUsername}
+                                placeholder={isAdminLoggedIn ? "Admin" : ""}
                                 disabled={isAdminLoggedIn}
                             />
                             {formik.touched.adminUsername && formik.errors.adminUsername ? (
@@ -99,6 +99,7 @@ function Adminlogin() {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.adminPassword}
+                                placeholder={isAdminLoggedIn ? "Admin@123" : ""}
                                 disabled={isAdminLoggedIn}
                             />
                             {formik.touched.adminPassword && formik.errors.adminPassword ? (
