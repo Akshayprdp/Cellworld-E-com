@@ -9,7 +9,7 @@ import { userInstance } from '../../../Axios/Axiosinstance';
 
 const PhoneStore = () => {
   const [products, setProducts] = useState([]);
-  const navigate = useNavigate(); // Get the navigate function
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -29,17 +29,36 @@ const PhoneStore = () => {
 
   const addToCart = async (productId) => {
     const userId = localStorage.getItem('userId');
-    const productIds = [productId]; // Convert productId to an array
+    if (!userId) {
+      console.error("User not logged in");
+      return;
+    }
+    const productIds = [productId];
     console.log('Adding to cart:', { userId, productIds, quantity: 1 });
 
     try {
       const response = await userInstance.post('/api/cart/add', { userId, productIds, quantity: 1 });
       console.log(response.data.message);
-
-      // Navigate to the cart page upon successful addition
       navigate('/cart');
     } catch (error) {
       console.error("Error adding to cart", error);
+    }
+  };
+
+  const addToWishlist = async (productId) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      console.error("User not logged in");
+      return;
+    }
+    console.log('Adding to wishlist:', { userId, productId });
+
+    try {
+      const response = await userInstance.post('/api/wishlist/add', { userId, productId });
+      console.log(response.data.message);
+      navigate('/wishlist');
+    } catch (error) {
+      console.error("Error adding to wishlist", error);
     }
   };
 
@@ -54,9 +73,11 @@ const PhoneStore = () => {
                   <Card.Img variant="top" src={`http://localhost:4000${product.imageUrl}`} alt={product.productName} />
                 </Link>
                 <div className="wishlist-icon-store">
-                  <Link to="/wishlist" className="wishlist-link-store">
-                    <FontAwesomeIcon icon={faHeart} className="Store-Wishlisticon" />
-                  </Link>
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className="Store-Wishlisticon"
+                    onClick={() => addToWishlist(product._id)}
+                  />
                 </div>
                 <Card.Body>
                   <Link to={`/product/${product._id}`} className='storelink'>

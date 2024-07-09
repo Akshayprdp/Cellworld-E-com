@@ -7,7 +7,7 @@ const userRoutes=require("./Routes/userRoutes")
 const adminRoutes=require('./Routes/adminRoutes')
 const cors = require('cors')
 const cartRoutes = require('./Routes/cartRoutes');
-
+const wishlistRoutes = require('./Routes/wishlistRoutes');
 
 
 
@@ -21,8 +21,9 @@ app.use('/uploads', express.static('uploads'));
 
 app.use('/api/cart', cartRoutes);
 
-
-
+// app.use('/api/wishlist', wishlistRoutes);
+// app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/wishlist', wishlistRoutes);
 
 
 app.listen(process.env.PORT, () => {

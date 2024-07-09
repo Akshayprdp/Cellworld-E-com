@@ -1,57 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Wishlist.css';
+import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { userInstance } from '../../../Axios/Axiosinstance';
 
-function Wishlist() {
+const Wishlist = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWishlistItems = async () => {
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        console.error("User not logged in");
+        return;
+      }
+
       try {
-        const userId = localStorage.getItem('userId');
-        const response = await axios.get(`/api/wishlist/${userId}`);
-        setWishlistItems(response.data.wishlist);
+        const response = await userInstance.get(`/api/wishlist/${userId}`);
+        if (response.data.status) {
+          setWishlistItems(response.data.wishlistItems);
+        } else {
+          console.error("No items in the wishlist");
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching wishlist items", error);
       }
     };
 
     fetchWishlistItems();
   }, []);
 
-  const handleRemoveItem = async (itemId) => {
+  const handleRemoveItem = async (productId) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      console.error("User not logged in");
+      return;
+    }
+
     try {
-      const userId = localStorage.getItem('userId');
-      await axios.post('/api/wishlist/remove', { userId, itemId });
-      setWishlistItems(wishlistItems.filter(item => item.productId !== itemId));
+      const response = await userInstance.post('/api/wishlist/remove', { userId, productId });
+      if (response.data.status) {
+        setWishlistItems(wishlistItems.filter(item => item._id !== productId));
+      } else {
+        console.error(response.data.message);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error removing item from wishlist", error);
     }
   };
 
   return (
     <div className="wishlist-wrapper">
-      <div className="wishlist-div">
-        <h2>My Wishlist</h2>
-        <div className="wishlist-items">
+      <Container className="wishlist-container">
+        <Row>
           {wishlistItems.map(item => (
-            <div className="wishlist-item" key={item.productId}>
-              <img className="wishlist-item-image" src={item.product.imageUrl} alt={item.product.productName} />
-              <div className="wishlist-item-details">
-                <h4>{item.product.productName}</h4>
-                <p>Price: ₹{item.product.price}</p>
-              </div>
-              <button className="remove-item" onClick={() => handleRemoveItem(item.productId)}>
-                <FontAwesomeIcon icon={faTrashAlt} /> Remove
-              </button>
-            </div>
+            <Col key={item._id} sm={12} md={6} lg={3}>
+              <Card className="wishlist-card">
+                <Card.Body>
+                  <Link to={`/product/${item._id}`} className='wishlist-link'>
+                    <Card.Title>{item.productName}</Card.Title>
+                  </Link>
+                  <Link to={`/product/${item._id}`}>
+                    <Card.Img variant="top" src={`http://localhost:4000${item.imageUrl}`} alt={item.productName} />
+                  </Link>
+                  <div className='price'>
+                    <Card.Text>₹{item.price}</Card.Text>
+                  </div>
+                  <Button variant="danger" className="remove-button" onClick={() => handleRemoveItem(item._id)}>
+                    <FontAwesomeIcon icon={faTrashAlt} />
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
           ))}
-        </div>
-      </div>
+        </Row>
+      </Container>
     </div>
   );
-}
+};
 
 export default Wishlist;

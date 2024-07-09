@@ -50,6 +50,12 @@ export const getProductById = (id) => {
   };
   
 
- 
+  export const getWishlistItems = (userId) => {
+    return userInstance.get(`/wishlist/${userId}`);
+  };
+  
+  export const removeWishlistItem = (userId, itemId) => {
+    return userInstance.post('/wishlist/remove', { userId, productId: itemId });
+  };
 
 
