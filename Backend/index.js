@@ -6,6 +6,7 @@ dbconnection.dbconfig()
 const userRoutes=require("./Routes/userRoutes")
 const adminRoutes=require('./Routes/adminRoutes')
 const cors = require('cors')
+const cartRoutes = require('./Routes/cartRoutes');
 
 
 
@@ -13,13 +14,12 @@ const cors = require('cors')
 
 app.use(express.json());
 app.use(cors())
-
 app.use("/",userRoutes)
 app.use("/admin",adminRoutes)
 app.use('/uploads', express.static('uploads'));
 
 
-
+app.use('/api/cart', cartRoutes);
 
 
 

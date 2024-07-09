@@ -27,6 +27,9 @@ function Header() {
   const handleLogout = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('username'); 
+    localStorage.removeItem('Emailaddress'); 
+    localStorage.removeItem('Phonenumber');
+    localStorage.removeItem('userId'); 
     setIsLoggedIn(false);
     setUsername('');
     navigate('/');

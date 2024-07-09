@@ -4,10 +4,13 @@ import "./Singleproduct.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faShoppingCart, faCreditCard, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { getProductById } from '../../../Services/UserApi';
+import {  useNavigate } from 'react-router-dom';
+import { userInstance } from '../../../Axios/Axiosinstance';
 
 function Singleproduct() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -24,6 +27,22 @@ function Singleproduct() {
     };
     fetchProduct();
   }, [id]);
+
+  const addToCart = async (productId) => {
+    const userId = localStorage.getItem('userId');
+    const productIds = [productId]; // Convert productId to an array
+    console.log('Adding to cart:', { userId, productIds, quantity: 1 });
+
+    try {
+      const response = await userInstance.post('/api/cart/add', { userId, productIds, quantity: 1 });
+      console.log(response.data.message);
+
+      // Navigate to the cart page upon successful addition
+      navigate('/cart');
+    } catch (error) {
+      console.error("Error adding to cart", error);
+    }
+  };
 
   if (!product) {
     return <div>Loading...</div>;
@@ -54,7 +73,7 @@ function Singleproduct() {
           <Link to="/wishlist" className="wishlist-link">
             <FontAwesomeIcon icon={faHeart} className="wishlist-icon" />
           </Link>
-          <button className="add-to-cart">
+          <button className="add-to-cart"  onClick={() => addToCart(product._id)}>
             <FontAwesomeIcon icon={faShoppingCart} /> Add to Cart
           </button>
           <Link to="/checkout">

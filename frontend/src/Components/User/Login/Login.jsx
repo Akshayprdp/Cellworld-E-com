@@ -2,40 +2,36 @@ import React from 'react';
 import './Login.css';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { useNavigate, } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { userLogin } from '../../../Services/UserApi';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 
-
-function Login() { 
+function Login() {
     const navigate = useNavigate();
-    
     const initialValues = {
         username: "",
         Password: "",
     };
-    
 
     const validationSchema = yup.object().shape({
-        username: yup.string()
-            .required('Username required'),
-        Password: yup.string()
-            .required("Password required"),
+        username: yup.string().required('Username required'),
+        Password: yup.string().required("Password required"),
     });
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     async function onSubmit(values) {
         try {
             const response = await userLogin(values);
+            console.log("API Response:", response.data);
             if (response.data.success) {
-                const { token, username, Emailaddress, Phonenumber } = response.data;  
-                console.log(`responsee${response.data}`)
+                const { token, userId, username, Emailaddress, Phonenumber } = response.data;  
                 toast.success(response.data.message);
                 localStorage.setItem('jwt', token);
                 localStorage.setItem('username', username);
                 localStorage.setItem('Emailaddress', Emailaddress); 
-                localStorage.setItem('Phonenumber', Phonenumber); 
+                localStorage.setItem('userId', userId); 
                 navigate('/'); 
             } else {
                 toast.error(response.data.message); 
@@ -45,9 +41,7 @@ function Login() {
             toast.error("An unexpected error occurred. Please try again later.");
         }
     }
-    
-    
-    
+
     const formik = useFormik({
         validationSchema,
         onSubmit,

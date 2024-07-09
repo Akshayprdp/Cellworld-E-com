@@ -36,3 +36,20 @@ export const getProductById = (id) => {
     return userInstance.get(`/products/${id}`);
   };
   
+  export const getCartItems = (userId) => {
+    return userInstance.get(`/api/cart/${userId}`);
+  };
+  
+
+  export const updateCartItem = (userId, productId, quantity) => {
+    return userInstance.put(`/api/cart/update/${userId}`, { productId, quantity });
+  };
+  
+  export const removeCartItem = (userId, productId) => {
+    return userInstance.delete(`/api/cart/remove/${userId}/${productId}`);
+  };
+  
+
+ 
+
+

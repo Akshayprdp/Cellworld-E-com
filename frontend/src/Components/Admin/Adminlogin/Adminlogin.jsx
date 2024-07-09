@@ -34,9 +34,6 @@ function Adminlogin() {
                 const { token, username, Emailaddress, Phonenumber } = response.data;
                 toast.success(response.data.message);
                 localStorage.setItem('adminJWT', token);
-                localStorage.setItem('username', username);
-                localStorage.setItem('Emailaddress', Emailaddress);
-                localStorage.setItem('Phonenumber', Phonenumber);
                 setIsAdminLoggedIn(true);
                 navigate('/admin');
             } else {

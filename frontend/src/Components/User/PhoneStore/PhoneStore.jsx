@@ -3,11 +3,13 @@ import './PhoneStore.css';
 import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getproducts } from '../../../Services/UserApi';
+import { userInstance } from '../../../Axios/Axiosinstance';
 
 const PhoneStore = () => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate(); // Get the navigate function
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,6 +27,22 @@ const PhoneStore = () => {
     fetchProducts();
   }, []);
 
+  const addToCart = async (productId) => {
+    const userId = localStorage.getItem('userId');
+    const productIds = [productId]; // Convert productId to an array
+    console.log('Adding to cart:', { userId, productIds, quantity: 1 });
+
+    try {
+      const response = await userInstance.post('/api/cart/add', { userId, productIds, quantity: 1 });
+      console.log(response.data.message);
+
+      // Navigate to the cart page upon successful addition
+      navigate('/cart');
+    } catch (error) {
+      console.error("Error adding to cart", error);
+    }
+  };
+
   return (
     <div className="carousel__image-container">
       <Container className="phone-store-container">
@@ -41,12 +59,12 @@ const PhoneStore = () => {
                   </Link>
                 </div>
                 <Card.Body>
-                <Link to={`/product/${product._id}`} className='storelink'>
-                  <Card.Title>{product.productName}</Card.Title>
+                  <Link to={`/product/${product._id}`} className='storelink'>
+                    <Card.Title>{product.productName}</Card.Title>
                   </Link>
                   <Card.Text>₹{product.price}</Card.Text>
                   <div className="button-container">
-                    <Button variant="primary" className="cart-button-store">Add to Cart</Button>
+                    <Button variant="primary" className="cart-button-store" onClick={() => addToCart(product._id)}>Add to Cart</Button>
                     <Link to={`/product/${product._id}`} className='storelinkbutton'>
                       <Button variant="secondary" className="purchase-button-store">Buy Now</Button>
                     </Link>
