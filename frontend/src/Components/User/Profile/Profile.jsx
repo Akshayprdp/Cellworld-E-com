@@ -14,7 +14,7 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwt');
     const storedUsername = localStorage.getItem('username');
     const storedEmail = localStorage.getItem('Emailaddress');
     const storedPhone = localStorage.getItem('Phonenumber');

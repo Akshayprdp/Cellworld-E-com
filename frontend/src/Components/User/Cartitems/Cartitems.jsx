@@ -5,7 +5,6 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { userInstance } from '../../../Axios/Axiosinstance';
 import { getCartItems, updateCartItem, removeCartItem } from '../../../Services/UserApi';
 
-
 const Cartitems = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +18,7 @@ const Cartitems = () => {
         if (response.data.status) {
           setCartItems(response.data.cartItems.proIds.map(item => ({
             ...item,
-            quantity: response.data.cartItems.quantity
+            quantity: response.data.cartItems.quantity // Assuming quantity is an attribute of cartItems in the response
           })));
         } else {
           console.error(response.data.message);
@@ -34,21 +33,20 @@ const Cartitems = () => {
     fetchCartItems();
   }, []);
 
-  const handleQuantityChange = async (itemId, newQuantity) => {
-    const userId = localStorage.getItem('userId');
-    try {
-      await updateCartItem(userId, itemId, newQuantity);
-      setCartItems(cartItems.map(item => item._id === itemId ? { ...item, quantity: newQuantity } : item));
-    } catch (error) {
-      console.error("Error updating quantity", error);
-    }
-  };
-
   const handleRemoveItem = async (itemId) => {
     const userId = localStorage.getItem('userId');
     try {
-      await removeCartItem(userId, itemId);
-      setCartItems(cartItems.filter(item => item._id !== itemId));
+      // Find the item to remove
+      const itemToRemove = cartItems.find(item => item._id === itemId);
+      if (itemToRemove.quantity > 1) {
+        // Update the quantity if more than one exists
+        await updateCartItem(userId, itemId, itemToRemove.quantity - 1);
+        setCartItems(cartItems.map(item => item._id === itemId ? { ...item, quantity: item.quantity - 1 } : item));
+      } else {
+        // Remove the item if only one exists
+        await removeCartItem(userId, itemId);
+        setCartItems(cartItems.filter(item => item._id !== itemId));
+      }
     } catch (error) {
       console.error("Error removing item", error);
     }
@@ -73,8 +71,6 @@ const Cartitems = () => {
                 <p>Price: ₹{item.price}</p>
                 <p>Quantity: {item.quantity}</p>
                 <p>Total: ₹{(item.price * item.quantity).toFixed(2)}</p>
-                <button onClick={() => handleQuantityChange(item._id, item.quantity - 1)} disabled={item.quantity <= 1} style={{ marginRight: '5px' }}>-</button>
-                <button onClick={() => handleQuantityChange(item._id, item.quantity + 1)} style={{ marginLeft: '5px' }}>+</button>
               </div>
               <button className="remove-item" onClick={() => handleRemoveItem(item._id)}>
                 <FontAwesomeIcon icon={faTrashAlt} /> Remove

@@ -20,9 +20,6 @@ app.use('/uploads', express.static('uploads'));
 
 
 app.use('/api/cart', cartRoutes);
-
-// app.use('/api/wishlist', wishlistRoutes);
-// app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 
 

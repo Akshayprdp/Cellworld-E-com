@@ -27,17 +27,31 @@ function Singleproduct() {
     };
     fetchProduct();
   }, [id]);
+  const addToWishlist = async (productId) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      console.error("User not logged in");
+      return;
+    }
+    console.log('Adding to wishlist:', { userId, productId });
+
+    try {
+      const response = await userInstance.post('/api/wishlist/add', { userId, productId });
+      console.log(response.data.message);
+      navigate('/wishlist');
+    } catch (error) {
+      console.error("Error adding to wishlist", error);
+    }
+  };
 
   const addToCart = async (productId) => {
     const userId = localStorage.getItem('userId');
-    const productIds = [productId]; // Convert productId to an array
+    const productIds = [productId]; 
     console.log('Adding to cart:', { userId, productIds, quantity: 1 });
 
     try {
       const response = await userInstance.post('/api/cart/add', { userId, productIds, quantity: 1 });
       console.log(response.data.message);
-
-      // Navigate to the cart page upon successful addition
       navigate('/cart');
     } catch (error) {
       console.error("Error adding to cart", error);
@@ -71,7 +85,7 @@ function Singleproduct() {
             <p className="special-price">₹{product.price}</p>
           </div>
           <Link to="/wishlist" className="wishlist-link">
-            <FontAwesomeIcon icon={faHeart} className="wishlist-icon" />
+            <FontAwesomeIcon icon={faHeart} className="wishlist-icon" onClick={() => addToWishlist(product._id)} />
           </Link>
           <button className="add-to-cart"  onClick={() => addToCart(product._id)}>
             <FontAwesomeIcon icon={faShoppingCart} /> Add to Cart

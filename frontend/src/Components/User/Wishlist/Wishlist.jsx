@@ -63,8 +63,8 @@ const Wishlist = () => {
                   <Link to={`/product/${item._id}`} className='wishlist-link'>
                     <Card.Title>{item.productName}</Card.Title>
                   </Link>
-                  <Link to={`/product/${item._id}`}>
-                    <Card.Img variant="top" src={`http://localhost:4000${item.imageUrl}`} alt={item.productName} />
+                  <Link to={`/product/${item._id}`} >
+                    <Card.Img variant="top" src={`http://localhost:4000${item.imageUrl}`} alt={item.productName} className='pnwish'/>
                   </Link>
                   <div className='price'>
                     <Card.Text>₹{item.price}</Card.Text>

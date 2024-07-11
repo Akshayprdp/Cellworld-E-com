@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 import './Category.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { getproducts } from '../../../Services/UserApi';
+
+
+
+
 
 const Category = () => {
   const [products, setProducts] = useState([]);
@@ -40,8 +44,10 @@ const Category = () => {
         <div className="products-list">
           {androidProducts.map(product => (
             <div className="product-item" key={product._id}>
+               <Link to={`/product/${product._id}`} className='pncat' >
               <img className="product-pic" src={`http://localhost:4000${product.imageUrl}`} alt={product.productName} />
-              <h3>{product.productName}</h3>
+              <h3 >{product.productName}</h3>
+              </Link>
               <div className="product-rating">
                 <FontAwesomeIcon icon={faStar} />
                 <FontAwesomeIcon icon={faStar} />

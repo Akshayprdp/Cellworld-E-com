@@ -16,3 +16,4 @@ export const productadd=(values)=>{
 export const getproductlist = () => {
   return adminInstance.get('/productlist');
 };
+

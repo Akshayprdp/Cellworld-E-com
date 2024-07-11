@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { adminLogin,userList,productadd,productlist } = require('../Controllers/adminController');
+const { adminLogin,userList,productadd,productlist,getProductById } = require('../Controllers/adminController');
 const upload = require('../Middleware/Multer');
 
 
@@ -13,6 +13,9 @@ router.get('/users', userList);
 router.post('/productadd',upload.single('imageFile'),productadd);
 
 router.get('/productlist', productlist);
+
+router.get('/product/:id', getProductById);
+router.get('/product/:id', getProductById);
 
 
 userList

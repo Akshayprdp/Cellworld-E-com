@@ -1,23 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Productedit.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function Productedit() {
-  const initialValues = {
+  const { productId } = useParams();
+  const [initialValues, setInitialValues] = React.useState({
     productName: '',
     description: '',
     price: '',
     category: '',
     imageFile: null,
-  };
+  });
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`/admin/product/${productId}`);
+        const product = response.data.product;
+        setInitialValues({
+          productName: product.productName,
+          description: product.description,
+          price: `₹${product.price}`,
+          category: product.category,
+          imageFile: null,
+        });
+      } catch (error) {
+        console.error('Error fetching product data', error);
+      }
+    };
+    fetchProduct();
+  }, [productId]);
 
   const validationSchema = yup.object().shape({
     productName: yup.string().required('Product name is required'),
     description: yup.string()
       .required('Description is required')
       .min(10, 'Minimum 10 letters needed'),
-    price: yup.string()  // Change from number to string
+    price: yup.string()
       .required('Price is required')
       .test('is-rupees', 'Price must start with ₹', value => value && value.startsWith('₹'))
       .test('is-valid-amount', 'Price must be a valid positive number after ₹', value => {
@@ -30,7 +52,6 @@ function Productedit() {
     category: yup.string().required('Category is required'),
     imageFile: yup.mixed().required('Image is required'),
   });
-  
 
   const onSubmit = (values) => {
     console.log(values);
@@ -38,6 +59,7 @@ function Productedit() {
 
   const formik = useFormik({
     initialValues,
+    enableReinitialize: true,
     validationSchema,
     onSubmit,
   });
@@ -132,7 +154,7 @@ function Productedit() {
             ) : null}
           </div>
 
-          <button type="submit" className="edit-product-form-btn">Add Product</button>
+          <button type="submit" className="edit-product-form-btn">Update Product</button>
         </form>
       </div>
     </div>

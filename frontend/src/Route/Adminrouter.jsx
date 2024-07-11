@@ -19,7 +19,8 @@ function Adminrouter() {
         <Route path='/productlist' element={<Productlistpage/>}/>
         <Route path='/userlist' element={<Userlistpage/>}/>
         <Route path='/category' element={<Categorypage/>}/>
-        <Route path='/productedit' element={<Producteditpage/>}/>
+        {/* <Route path='/productedit' element={<Producteditpage/>}/> */}
+        <Route path="/productedit/:productId" element={<Producteditpage />} />
         
       </Routes>
       
