@@ -58,4 +58,15 @@ export const getProductById = (id) => {
     return userInstance.post('/wishlist/remove', { userId, productId: itemId });
   };
 
+  export const updateProfile = (userInfo) => {
+    return authenticatedRequest('put', '/updateProfile', userInfo);
+};
 
+// export const authenticatedRequest = async (method, url, data) => {
+//   const token = localStorage.getItem('jwt');
+//   const config = {
+//       headers: { Authorization: token }
+//   };
+
+//   return await axios({ method, url: `${baseURL}${url}`, data, ...config });
+// };

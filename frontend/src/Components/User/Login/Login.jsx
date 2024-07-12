@@ -32,6 +32,7 @@ function Login() {
                 localStorage.setItem('username', username);
                 localStorage.setItem('Emailaddress', Emailaddress); 
                 localStorage.setItem('userId', userId); 
+                localStorage.setItem('Phonenumber',Phonenumber)
                 navigate('/'); 
             } else {
                 toast.error(response.data.message); 

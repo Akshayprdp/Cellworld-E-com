@@ -43,7 +43,7 @@ module.exports.login = async (req, res) => {
             const auth = await bcrypt.compare(Password, customer.Password);
             if (auth) {
                 const token = jwt.sign({ id: customer._id }, secretKey, { expiresIn: '1h' });
-                return res.json({ message: "Login successful", success: true, token, username: customer.username, Emailaddress:customer.Emailaddress, userId:customer._id, }); // Include the username in the response
+                return res.json({ message: "Login successful", success: true, token, username: customer.username, Emailaddress:customer.Emailaddress, userId:customer._id, Phonenumber:customer.Phonenumber }); // Include the username in the response
             } else {
                 return res.json({ message: "Incorrect password", success: false });
             }
@@ -84,5 +84,28 @@ module.exports.products = async (req, res) => {
     }
   };
 
- 
+  module.exports.updateProfile = async (req, res) => {
+    try {
+      const { email, username, Phonenumber } = req.body;
+      const user = await userModel.findOne({ Emailaddress: email });
+  
+      if (!user) {
+        return res.json({ message: "User not found", status: false });
+      }
+  
+      user.username = username;
+      user.Phonenumber = Phonenumber;
+  
+      await user.save();
+  
+      return res.json({
+        message: "Profile updated successfully",
+        status: true,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.json({ message: "Internal server error", status: false });
+    }
+  };
+  
   

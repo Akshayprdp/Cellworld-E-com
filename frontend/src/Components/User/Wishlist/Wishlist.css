@@ -29,6 +29,21 @@
   width: 200px;
   background-color: #343333;
 }
-.pnwish{
+
+.remove-button:hover {
+  background-color: #5a5959;
+}
+
+.pnwish {
   margin-top: 33px;
+}
+
+
+.empty-wishlist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 450px; 
+  color: #333;
+  font-size: 18px;
 }

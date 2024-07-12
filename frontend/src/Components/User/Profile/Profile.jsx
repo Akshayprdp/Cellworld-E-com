@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import { useNavigate } from 'react-router-dom';
+import { updateProfile } from '../../../Services/UserApi';
 
 function Profile() {
   const [userInfo, setUserInfo] = useState({
@@ -18,11 +19,7 @@ function Profile() {
     const storedUsername = localStorage.getItem('username');
     const storedEmail = localStorage.getItem('Emailaddress');
     const storedPhone = localStorage.getItem('Phonenumber');
-  
-    console.log('Stored Email:', storedEmail);
-    console.log('Stored Phone:', storedPhone);
-    console.log('Stored username:', storedUsername);
-  
+
     if (!token) {
       navigate('/login');
     } else {
@@ -35,8 +32,6 @@ function Profile() {
       });
     }
   }, [navigate]);
-  
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,9 +41,30 @@ function Profile() {
     });
   };
 
-  const handleSave = () => {
-    // Add save functionality here
-    console.log('User info saved', userInfo);
+  const handleSave = async () => {
+    if (userInfo.password !== userInfo.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await updateProfile({
+        email: userInfo.email,
+        username: userInfo.username,
+        Phonenumber: userInfo.phone,
+      });
+
+      if (response.data.status) {
+        alert('Profile updated successfully');
+        localStorage.setItem('username', userInfo.username);
+        localStorage.setItem('Phonenumber', userInfo.phone);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error updating profile", error);
+      alert("An error occurred while updating the profile");
+    }
   };
 
   return (
@@ -69,6 +85,7 @@ function Profile() {
             name="email"
             value={userInfo.email}
             onChange={handleChange}
+            readOnly
           />
           <label>Password</label>
           <input

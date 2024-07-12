@@ -33,11 +33,14 @@ const PhoneStore = () => {
       console.error("User not logged in");
       return;
     }
-    const productIds = [productId];
-    console.log('Adding to cart:', { userId, productIds, quantity: 1 });
+    // const productIds = [productId];
+    
+    // console.log('Adding to cart:', { userId, productIds, quantity: 1 });
+    console.log('Adding to cart:', { userId, productId, quantity: 1 });
 
     try {
-      const response = await userInstance.post('/api/cart/add', { userId, productIds, quantity: 1 });
+      // const response = await userInstance.post('/api/cart/add', { userId, productIds, quantity: 1 });
+      const response = await userInstance.post('/api/cart/add', { userId, productId, quantity: 1 });
       console.log(response.data.message);
       navigate('/cart');
     } catch (error) {

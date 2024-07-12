@@ -85,3 +85,12 @@
 .checkout-button:hover {
   background-color: #5a5959;
 }
+
+.empty-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 450px; 
+  color: #333;
+  font-size: 18px;
+}

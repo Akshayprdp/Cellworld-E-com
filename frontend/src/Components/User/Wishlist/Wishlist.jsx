@@ -55,28 +55,34 @@ const Wishlist = () => {
   return (
     <div className="wishlist-wrapper">
       <Container className="wishlist-container">
-        <Row>
-          {wishlistItems.map(item => (
-            <Col key={item._id} sm={12} md={6} lg={3}>
-              <Card className="wishlist-card">
-                <Card.Body>
-                  <Link to={`/product/${item._id}`} className='wishlist-link'>
-                    <Card.Title>{item.productName}</Card.Title>
-                  </Link>
-                  <Link to={`/product/${item._id}`} >
-                    <Card.Img variant="top" src={`http://localhost:4000${item.imageUrl}`} alt={item.productName} className='pnwish'/>
-                  </Link>
-                  <div className='price'>
-                    <Card.Text>₹{item.price}</Card.Text>
-                  </div>
-                  <Button variant="danger" className="remove-button" onClick={() => handleRemoveItem(item._id)}>
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        {wishlistItems.length === 0 ? (
+          <div className="empty-wishlist">
+            <p>Your wishlist is empty.</p>
+          </div>
+        ) : (
+          <Row>
+            {wishlistItems.map(item => (
+              <Col key={item._id} sm={12} md={6} lg={3}>
+                <Card className="wishlist-card">
+                  <Card.Body>
+                    <Link to={`/product/${item._id}`} className='wishlist-link'>
+                      <Card.Title>{item.productName}</Card.Title>
+                    </Link>
+                    <Link to={`/product/${item._id}`} >
+                      <Card.Img variant="top" src={`http://localhost:4000${item.imageUrl}`} alt={item.productName} className='pnwish'/>
+                    </Link>
+                    <div className='price'>
+                      <Card.Text>₹{item.price}</Card.Text>
+                    </div>
+                    <Button variant="danger" className="remove-button" onClick={() => handleRemoveItem(item._id)}>
+                      <FontAwesomeIcon icon={faTrashAlt} />
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
       </Container>
     </div>
   );
