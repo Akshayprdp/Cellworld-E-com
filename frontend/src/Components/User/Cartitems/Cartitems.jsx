@@ -3,7 +3,8 @@ import './Cartitems.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { getCartItems, removeCartItem } from '../../../Services/UserApi';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Cartitems = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -34,11 +35,15 @@ const Cartitems = () => {
   const handleRemoveItem = async (itemId) => {
     const userId = localStorage.getItem('userId');
     try {
-      await removeCartItem(userId, itemId);
-      setCartItems(cartItems.filter(item => item._id !== itemId));
-      // window.location.reload();
+      const response = await removeCartItem(userId, itemId);
+      if (response.data.success) {
+        setCartItems(cartItems.filter(item => item._id !== itemId));
+      } else {
+        toast.error("Error removing item from cart");
+      }
     } catch (error) {
       console.error("Error removing item", error);
+      toast.error("Error removing item from cart");
     }
   };
 
@@ -50,6 +55,7 @@ const Cartitems = () => {
 
   return (
     <div className="cart-wrapper">
+      <ToastContainer />
       <div className="cart-div">
         <h2>Shopping Cart</h2>
         {cartItems.length === 0 ? (

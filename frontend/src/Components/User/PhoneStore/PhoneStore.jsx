@@ -6,6 +6,8 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { getproducts } from '../../../Services/UserApi';
 import { userInstance } from '../../../Axios/Axiosinstance';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PhoneStore = () => {
   const [products, setProducts] = useState([]);
@@ -31,20 +33,28 @@ const PhoneStore = () => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
       console.error("User not logged in");
+      toast.error("Please log in to add items to your cart");
       return;
     }
-    // const productIds = [productId];
-    
-    // console.log('Adding to cart:', { userId, productIds, quantity: 1 });
+
     console.log('Adding to cart:', { userId, productId, quantity: 1 });
 
     try {
-      // const response = await userInstance.post('/api/cart/add', { userId, productIds, quantity: 1 });
       const response = await userInstance.post('/api/cart/add', { userId, productId, quantity: 1 });
-      console.log(response.data.message);
-      navigate('/cart');
+
+      if (response.data.success) {
+        toast.success("Item added to cart successfully");
+        navigate('/cart');
+      } else {
+        if (response.status === 409) {
+          toast.info(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
+      }
     } catch (error) {
       console.error("Error adding to cart", error);
+      toast.warn("This item is already in your cart.");
     }
   };
 
@@ -52,16 +62,24 @@ const PhoneStore = () => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
       console.error("User not logged in");
+      toast.error("Please log in to add items to your wishlist");
       return;
     }
+
     console.log('Adding to wishlist:', { userId, productId });
 
     try {
       const response = await userInstance.post('/api/wishlist/add', { userId, productId });
-      console.log(response.data.message);
-      navigate('/wishlist');
+
+      if (response.data.success) {
+        toast.success("Item added to wishlist successfully");
+        navigate('/wishlist');
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
       console.error("Error adding to wishlist", error);
+      toast.error("Error adding to wishlist. Please try again.");
     }
   };
 
@@ -99,6 +117,7 @@ const PhoneStore = () => {
           ))}
         </Row>
       </Container>
+      <ToastContainer />
     </div>
   );
 };

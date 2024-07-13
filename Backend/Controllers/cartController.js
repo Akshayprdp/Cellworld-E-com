@@ -3,103 +3,35 @@ const mongoose = require("mongoose");
 
 module.exports.addToCart = async (req, res) => {
   const { userId, productId, quantity } = req.body;
-  console.log(typeof productId);
 
   try {
-    // console.log("Adding to cart:", { userId, productIds, quantity });
-
     if (!userId || !productId || !quantity) {
-      console.error("Missing required fields");
-      return res
-        .status(400)
-        .json({ message: "Missing required fields", success: false });
+      return res.status(400).json({ message: "Missing required fields", success: false });
     }
 
     let userCart = await CartItem.findOne({ userId });
 
-    console.log(userCart);
-
-    const isProductExist = await userCart.proIds.find(
-      (prodid) => prodid == productId
-    );
-
-    if (!isProductExist) {
-      // cartItem.proIds.push(productId);
-      // await cartItem.save();
-      const cartItem = await CartItem.findOneAndUpdate(
-        { userId },
-        {
-          $push: { proIds: productId },
-        }
-      );
-
-      res.json({
-        message: "Item(s) added to cart successfully",
-        success: true,
-        cartItem,
-      });
+    if (!userCart) {
+      userCart = new CartItem({ userId, proIds: [productId], quantity });
+      await userCart.save();
     } else {
-      res
-        .status(409)
-        .json({ message: "product already carted", success: false });
+      const isProductExist = userCart.proIds.includes(productId);
+
+      if (isProductExist) {
+        return res.status(409).json({ message: "Product already in cart", success: false });
+      }
+
+      userCart.proIds.push(productId);
+      await userCart.save();
     }
 
-    // // Check if userId is a valid ObjectId
-    // if (!mongoose.Types.ObjectId.isValid(userId)) {
-    //   console.error("Invalid userId");
-    //   return res
-    //     .status(400)
-    //     .json({ message: "Invalid userId", success: false });
-    // }
-
-    // // Ensure productIds is an array
-    // if (
-    //   !Array.isArray(productIds) ||
-    //   !productIds.every((id) => mongoose.Types.ObjectId.isValid(id))
-    // ) {
-    //   console.error("Invalid productIds");
-    //   return res
-    //     .status(400)
-    //     .json({ message: "Invalid productIds", success: false });
-    // }
-
-    // let cartItem = await CartItem.findOne({ userId });
-
-    // if (cartItem) {
-    //   // Add new productIds to the existing ones
-    //   cartItem.proIds = [
-    //     ...new Set([
-    //       ...cartItem.proIds,
-    //       ...productIds.map((id) => new mongoose.Types.ObjectId(id)),
-    //     ]),
-    //   ]; // Convert to ObjectId with new
-    //   cartItem.quantity += quantity;
-    //   //   console.log('Updating existing cart item:', cartItem);
-    // } else {
-    //   // If cartItem does not exist, create a new one
-    //   cartItem = new CartItem({
-    //     userId,
-    //     proIds: productIds.map((id) => new mongoose.Types.ObjectId(id)),
-    //     quantity,
-    //   }); // Convert to ObjectId with new
-    //   //   console.log('Creating new cart item:', cartItem);
-    // }
-
-    // await cartItem.save();
-    // console.log("Item(s) added to cart successfully:", cartItem);
-    // await cartItem.save();
-    // console.log("Item(s) added to cart successfully:", cartItem);
-
-    // return res.json({
-    //   message: "Item(s) added to cart successfully",
-    //   success: true,
-    //   cartItem,
-    // });
+    res.json({ message: "Item(s) added to cart successfully", success: true, cartItem: userCart });
   } catch (error) {
     console.error("Error adding item(s) to cart:", error);
-    return res.status(500).json({ message: "Server error", success: false });
+    res.status(500).json({ message: "Server error", success: false });
   }
 };
+
 
 module.exports.getCartItems = async (req, res) => {
   const { userId } = req.params;
