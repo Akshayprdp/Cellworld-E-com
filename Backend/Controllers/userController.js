@@ -86,26 +86,26 @@ module.exports.products = async (req, res) => {
 
   module.exports.updateProfile = async (req, res) => {
     try {
-      const { email, username, Phonenumber } = req.body;
-      const user = await userModel.findOne({ Emailaddress: email });
-  
-      if (!user) {
-        return res.json({ message: "User not found", status: false });
-      }
-  
-      user.username = username;
-      user.Phonenumber = Phonenumber;
-  
-      await user.save();
-  
-      return res.json({
-        message: "Profile updated successfully",
-        status: true,
-      });
+        const { email, username, Phonenumber } = req.body;
+        const user = await userModel.findOne({ Emailaddress: email });
+
+        if (!user) {
+            return res.json({ message: "User not found", status: false });
+        }
+
+        user.username = username;
+        user.Phonenumber = Phonenumber;
+
+        await user.save();
+
+        return res.json({
+            message: "Profile updated successfully",
+            status: true,
+        });
     } catch (error) {
-      console.log(error);
-      return res.json({ message: "Internal server error", status: false });
+        console.log(error);
+        return res.json({ message: "Internal server error", status: false });
     }
-  };
+};
   
   

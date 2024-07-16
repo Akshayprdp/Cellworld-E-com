@@ -14,13 +14,6 @@ export const userLogin = (values) => {
 //     return Hostedapiinstance.post("/login", { ...values });
 // };
 
-export const authenticatedRequest = async (method, url, data) => {
-    const token = localStorage.getItem('token');
-    const config = {
-        headers: { Authorization: token }
-    };
-    return await axios({ method, url, data, ...config });
-};
 
 export const getproducts = () => {
     return userInstance.get('/products');
@@ -58,15 +51,17 @@ export const getProductById = (id) => {
     return userInstance.post('/wishlist/remove', { userId, productId: itemId });
   };
 
+  // import axios from 'axios';
+
+  // const authenticatedRequest = async (method, url, data) => {
+  //     const token = localStorage.getItem('jwt');
+  //     const config = {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //     };
+  //     return await axios({ method, url: `/api${url}`, data, ...config }); // Ensure URL is prefixed with /api
+  // };
+  
   export const updateProfile = (userInfo) => {
-    return authenticatedRequest('put', '/updateProfile', userInfo);
-};
-
-// export const authenticatedRequest = async (method, url, data) => {
-//   const token = localStorage.getItem('jwt');
-//   const config = {
-//       headers: { Authorization: token }
-//   };
-
-//   return await axios({ method, url: `${baseURL}${url}`, data, ...config });
-// };
+      return userInstance.put('api/updateProfile', userInfo); 
+  };
+  

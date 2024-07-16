@@ -42,11 +42,6 @@ function Profile() {
   };
 
   const handleSave = async () => {
-    if (userInfo.password !== userInfo.confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-
     try {
       const response = await updateProfile({
         email: userInfo.email,
@@ -62,8 +57,8 @@ function Profile() {
         alert(response.data.message);
       }
     } catch (error) {
-      console.error("Error updating profile", error);
-      alert("An error occurred while updating the profile");
+      console.error('Error updating profile', error);
+      alert('An error occurred while updating the profile');
     }
   };
 

@@ -12,5 +12,6 @@ router.get("/products/:id", getProductById);
 router.post('/signup',signup)
 router.put('/updateProfile', updateProfile);
 
+
 module.exports=router
 
