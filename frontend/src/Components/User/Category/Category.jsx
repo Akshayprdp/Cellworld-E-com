@@ -66,8 +66,10 @@ const Category = () => {
         <div className="products-list">
           {appleProducts.map(product => (
             <div className="product-item" key={product._id}>
+              <Link to={`/product/${product._id}`} className='pncat' >
               <img className="product-pic" src={`http://localhost:4000${product.imageUrl}`} alt={product.productName} />
               <h3>{product.productName}</h3>
+              </Link>
               <div className="product-rating">
                 <FontAwesomeIcon icon={faStar} />
                 <FontAwesomeIcon icon={faStar} />

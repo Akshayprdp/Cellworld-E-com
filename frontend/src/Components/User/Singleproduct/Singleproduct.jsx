@@ -4,8 +4,10 @@ import "./Singleproduct.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faShoppingCart, faCreditCard, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { getProductById } from '../../../Services/UserApi';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { userInstance } from '../../../Axios/Axiosinstance';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Singleproduct() {
   const { id } = useParams();
@@ -27,6 +29,7 @@ function Singleproduct() {
     };
     fetchProduct();
   }, [id]);
+
   const addToWishlist = async (productId) => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
@@ -46,22 +49,36 @@ function Singleproduct() {
 
   const addToCart = async (productId) => {
     const userId = localStorage.getItem('userId');
-    const productIds = [productId]; 
-    console.log('Adding to cart:', { userId, productIds, quantity: 1 });
+    if (!userId) {
+      console.error("User not logged in");
+      toast.error("Please log in to add items to your cart");
+      return;
+    }
+
+    console.log('Adding to cart:', { userId, productId, quantity: 1 });
 
     try {
-      const response = await userInstance.post('/api/cart/add', { userId, productIds, quantity: 1 });
-      console.log(response.data.message);
-      navigate('/cart');
+      const response = await userInstance.post('/api/cart/add', { userId, productId, quantity: 1 });
+
+      if (response.data.success) {
+        toast.success("Item added to cart successfully");
+        navigate('/cart');
+      } else {
+        if (response.status === 409) {
+          toast.info(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
+      }
     } catch (error) {
       console.error("Error adding to cart", error);
+      toast.warn("This item is already in your cart.");
     }
   };
 
   if (!product) {
     return <div>Loading...</div>;
   }
-
 
   const trimmedDescription = product.description.split(' ').slice(0, 100).join(' ') + (product.description.split(' ').length > 100 ? '...' : '');
 
@@ -87,7 +104,7 @@ function Singleproduct() {
           <Link to="/wishlist" className="wishlist-link">
             <FontAwesomeIcon icon={faHeart} className="wishlist-icon" onClick={() => addToWishlist(product._id)} />
           </Link>
-          <button className="add-to-cart"  onClick={() => addToCart(product._id)}>
+          <button className="add-to-cart" onClick={() => addToCart(product._id)}>
             <FontAwesomeIcon icon={faShoppingCart} /> Add to Cart
           </button>
           <Link to="/checkout">
@@ -109,6 +126,7 @@ function Singleproduct() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

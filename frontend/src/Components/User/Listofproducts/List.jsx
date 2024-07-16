@@ -24,6 +24,7 @@ const List = () => {
     };
     fetchProducts();
   }, [category]);
+  
 
   return (
     <div>
