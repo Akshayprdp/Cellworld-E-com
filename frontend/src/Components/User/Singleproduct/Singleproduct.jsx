@@ -41,7 +41,10 @@ function Singleproduct() {
     try {
       const response = await userInstance.post('/api/wishlist/add', { userId, productId });
       console.log(response.data.message);
-      navigate('/wishlist');
+      if(response.data.success){
+        toast.success('Item added to wishlist successfully')}
+        else{toast.error(response.data.message)}
+      // navigate('/wishlist');
     } catch (error) {
       console.error("Error adding to wishlist", error);
     }
@@ -101,9 +104,11 @@ function Singleproduct() {
             <p className='price-single'>Special price :</p>
             <p className="special-price">₹{product.price}</p>
           </div>
-          <Link to="/wishlist" className="wishlist-link">
+          {/* <Link to="/wishlist" className="wishlist-link"> */}
+             <div className="wishlist-link">
             <FontAwesomeIcon icon={faHeart} className="wishlist-icon" onClick={() => addToWishlist(product._id)} />
-          </Link>
+            </div>
+          {/* </Link> */}
           <button className="add-to-cart" onClick={() => addToCart(product._id)}>
             <FontAwesomeIcon icon={faShoppingCart} /> Add to Cart
           </button>

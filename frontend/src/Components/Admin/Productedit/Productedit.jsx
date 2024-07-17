@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+// Productedit.jsx
+import React, { useEffect, useState } from 'react';
 import './Productedit.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { getProductById, updateProduct } from '../../../Services/AdminApi'; // Import getProductById
 
 function Productedit() {
   const { productId } = useParams();
-  const [initialValues, setInitialValues] = React.useState({
+  const navigate = useNavigate();
+  const [initialValues, setInitialValues] = useState({
     productName: '',
     description: '',
     price: '',
@@ -18,7 +21,7 @@ function Productedit() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`/admin/product/${productId}`);
+        const response = await getProductById(productId); // Call getProductById with productId
         const product = response.data.product;
         setInitialValues({
           productName: product.productName,
@@ -53,8 +56,20 @@ function Productedit() {
     imageFile: yup.mixed().required('Image is required'),
   });
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const onSubmit = async (values) => {
+    try {
+      const formData = new FormData();
+      formData.append('productName', values.productName);
+      formData.append('description', values.description);
+      formData.append('price', values.price.slice(1)); // Remove the ₹ symbol
+      formData.append('category', values.category);
+      formData.append('imageFile', values.imageFile);
+
+      await updateProduct(productId, formData);
+      navigate('/admin/productlist'); // Redirect to the product list page after update
+    } catch (error) {
+      console.error('Error updating product', error);
+    }
   };
 
   const formik = useFormik({
@@ -71,86 +86,76 @@ function Productedit() {
       </div>
       <div className="edit-product-form-container">
         <form onSubmit={formik.handleSubmit}>
-          <div className="edit-product-form-group">
-            <label htmlFor="productName" className="edit-product-form-label">Product Name</label>
+          <div className="form-group">
+            <label htmlFor="productName">Product Name</label>
             <input
               type="text"
               id="productName"
               name="productName"
-              className="edit-product-form-control"
               value={formik.values.productName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
             {formik.touched.productName && formik.errors.productName ? (
-              <div className="edit-product-form-error">{formik.errors.productName}</div>
+              <div className="error">{formik.errors.productName}</div>
             ) : null}
           </div>
 
-          <div className="edit-product-form-group">
-            <label htmlFor="description" className="edit-product-form-label">Description</label>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
             <textarea
               id="description"
               name="description"
-              className="edit-product-form-control"
               value={formik.values.description}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
             {formik.touched.description && formik.errors.description ? (
-              <div className="edit-product-form-error">{formik.errors.description}</div>
+              <div className="error">{formik.errors.description}</div>
             ) : null}
           </div>
 
-          <div className="edit-product-form-group">
-            <label htmlFor="price" className="edit-product-form-label">Price</label>
+          <div className="form-group">
+            <label htmlFor="price">Price</label>
             <input
               type="text"
               id="price"
               name="price"
-              className="edit-product-form-control"
               value={formik.values.price}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
             {formik.touched.price && formik.errors.price ? (
-              <div className="edit-product-form-error">{formik.errors.price}</div>
+              <div className="error">{formik.errors.price}</div>
             ) : null}
           </div>
 
-          <div className="edit-product-form-group">
-            <label htmlFor="category" className="edit-product-form-label">Category</label>
-            <select
+          <div className="form-group">
+            <label htmlFor="category">Category</label>
+            <input
+              type="text"
               id="category"
               name="category"
-              className="edit-product-form-control"
               value={formik.values.category}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-            >
-              <option value="" label="Select category" />
-              <option value="apple" label="Apple" />
-              <option value="android" label="Android" />
-            </select>
+            />
             {formik.touched.category && formik.errors.category ? (
-              <div className="edit-product-form-error">{formik.errors.category}</div>
+              <div className="error">{formik.errors.category}</div>
             ) : null}
           </div>
 
-          <div className="edit-product-form-group">
-            <label htmlFor="imageFile" className="edit-product-form-label">Image</label>
+          <div className="form-group">
+            <label htmlFor="imageFile">Image</label>
             <input
               type="file"
               id="imageFile"
               name="imageFile"
-              className="edit-product-form-control"
-              onChange={(event) => {
-                formik.setFieldValue("imageFile", event.currentTarget.files[0]);
-              }}
+              onChange={(event) => formik.setFieldValue("imageFile", event.currentTarget.files[0])}
               onBlur={formik.handleBlur}
             />
             {formik.touched.imageFile && formik.errors.imageFile ? (
-              <div className="edit-product-form-error">{formik.errors.imageFile}</div>
+              <div className="error">{formik.errors.imageFile}</div>
             ) : null}
           </div>
 

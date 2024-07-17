@@ -17,3 +17,10 @@ export const getproductlist = () => {
   return adminInstance.get('/productlist');
 };
 
+export const getProductById = (productId) => {
+  return adminInstance.get(`/product/${productId}`);
+};
+
+export const updateProduct=(productId, productInfo)=>{
+  return adminInstance.put(`/updateproduct/${productId}`,productInfo)
+}

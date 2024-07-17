@@ -73,7 +73,7 @@ const PhoneStore = () => {
 
       if (response.data.success) {
         toast.success("Item added to wishlist successfully");
-        navigate('/wishlist');
+        // navigate('/wishlist');
       } else {
         toast.error(response.data.message);
       }

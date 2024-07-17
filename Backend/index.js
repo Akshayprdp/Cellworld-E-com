@@ -14,7 +14,7 @@ const wishlistRoutes = require('./Routes/wishlistRoutes');
 
 app.use(express.json());
 app.use(cors())
-app.use("/api", userRoutes);
+app.use("/", userRoutes);
 app.use("/admin",adminRoutes)
 app.use('/uploads', express.static('uploads'));
 

@@ -62,6 +62,6 @@ export const getProductById = (id) => {
   // };
   
   export const updateProfile = (userInfo) => {
-      return userInstance.put('api/updateProfile', userInfo); 
+      return userInstance.put('/updateProfile', userInfo); 
   };
   
