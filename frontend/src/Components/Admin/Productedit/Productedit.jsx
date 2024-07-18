@@ -1,11 +1,9 @@
-// Productedit.jsx
 import React, { useEffect, useState } from 'react';
 import './Productedit.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { getProductById, updateProduct } from '../../../Services/AdminApi'; // Import getProductById
+import { getProductById, updateProduct } from '../../../Services/AdminApi';
 
 function Productedit() {
   const { productId } = useParams();
@@ -21,7 +19,7 @@ function Productedit() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await getProductById(productId); // Call getProductById with productId
+        const response = await getProductById(productId);
         const product = response.data.product;
         setInitialValues({
           productName: product.productName,
@@ -65,10 +63,11 @@ function Productedit() {
       formData.append('category', values.category);
       formData.append('imageFile', values.imageFile);
 
-      await updateProduct(productId, formData);
-      navigate('/admin/productlist'); // Redirect to the product list page after update
+      const response = await updateProduct(productId, formData);
+      console.log('Product updated successfully:', response.data); // Log success response
+      navigate('/admin/productlist');
     } catch (error) {
-      console.error('Error updating product', error);
+      console.error('Error updating product:', error.response ? error.response.data : error.message);
     }
   };
 

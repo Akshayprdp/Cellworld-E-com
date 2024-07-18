@@ -20,7 +20,7 @@ router.put('/updateproduct/:id',updateProduct)
 
 
 
-userList
+// userList
 
 
 module.exports = router;
