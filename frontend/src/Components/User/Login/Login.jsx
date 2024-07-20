@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { userLogin } from '../../../Services/UserApi';
-import { toast } from 'react-toastify';
-import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
     const navigate = useNavigate();
@@ -19,20 +19,20 @@ function Login() {
         Password: yup.string().required("Password required"),
     });
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     async function onSubmit(values) {
         try {
             const response = await userLogin(values);
-            console.log("API Response:", response.data);
+            // console.log("API Response:", response.data);
             if (response.data.success) {
                 const { token, userId, username, Emailaddress, Phonenumber } = response.data;  
-                toast.success(response.data.message);
+                // toast.success(response.data.message);
                 localStorage.setItem('jwt', token);
                 localStorage.setItem('username', username);
                 localStorage.setItem('Emailaddress', Emailaddress); 
                 localStorage.setItem('userId', userId); 
-                localStorage.setItem('Phonenumber',Phonenumber)
+                localStorage.setItem('Phonenumber', Phonenumber);
                 navigate('/'); 
             } else {
                 toast.error(response.data.message); 
@@ -84,6 +84,7 @@ function Login() {
                     </form>
                 </center>
             </div>
+            <ToastContainer />
         </div>
     );
 }

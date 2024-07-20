@@ -43,7 +43,7 @@ const Productlist = () => {
               <tr key={product._id}>
                 <td>{product.productName}</td>
                 <td>10</td> {/* Placeholder for quantity */}
-                <td>{product.price}</td>
+                <td>₹{product.price}</td>
                 <td>
                   <button className="edit-button" onClick={() => handleEditClick(product._id)}>
                     <FontAwesomeIcon icon={faEdit} /> Edit

@@ -66,10 +66,14 @@ function Productedit() {
       const response = await updateProduct(productId, formData);
       console.log('Product updated successfully:', response.data); // Log success response
       navigate('/admin/productlist');
+
+      console.log(formData);
+
     } catch (error) {
       console.error('Error updating product:', error.response ? error.response.data : error.message);
     }
   };
+
 
   const formik = useFormik({
     initialValues,
@@ -102,16 +106,16 @@ function Productedit() {
 
           <div className="form-group">
             <label htmlFor="description">Description</label>
-            <textarea
+            <input
               id="description"
               name="description"
               value={formik.values.description}
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              // onBlur={formik.handleBlur}
             />
-            {formik.touched.description && formik.errors.description ? (
+            {/* {formik.touched.description && formik.errors.description ? (
               <div className="error">{formik.errors.description}</div>
-            ) : null}
+            ) : null} */}
           </div>
 
           <div className="form-group">

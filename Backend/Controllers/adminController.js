@@ -113,11 +113,12 @@ module.exports.getProductById = async (req, res) => {
 };
 
 module.exports.updateProduct = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
-    res.status(200).json({ success: true, product: updatedProduct });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
+  console.log("from update",req.body);
+  // try {
+  //   const { id } = req.params;
+  //   const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
+  //   res.status(200).json({ success: true, product: updatedProduct });
+  // } catch (error) {
+  //   res.status(500).json({ success: false, error: error.message });
+  // }
 };

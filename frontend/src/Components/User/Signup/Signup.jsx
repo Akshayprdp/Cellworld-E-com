@@ -2,13 +2,14 @@ import React from 'react'
 import './Signup.css'
 import * as yup from 'yup'
 import { useFormik } from 'formik'
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { userRegister } from '../../../Services/UserApi';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 function Signup() { 
+    const navigate = useNavigate();
+
     const initialValues = {
         username: "",
         Emailaddress: "",
@@ -51,6 +52,7 @@ function Signup() {
             const data = await userRegister(values);
             if (data.data.status) {
                 toast.success(data.data.message);
+                navigate('/login'); 
             } else {
                 toast.error(data.data.message);
             }
@@ -59,7 +61,6 @@ function Signup() {
             console.log(error);
         }
     }
-
 
     const formik = useFormik({
         validationSchema,
@@ -138,6 +139,7 @@ function Signup() {
                     </form>
                 </center>
             </div>
+            <ToastContainer />
         </div>
     )
 }

@@ -22,6 +22,7 @@ module.exports.signup = async (req, res) => {
       Emailaddress: Emailaddress,
       Password: Password,
       Phonenumber: Phonenumber,
+      status: "active",
     });
     const userDetails = await newUser.save();
 

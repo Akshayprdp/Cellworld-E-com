@@ -22,5 +22,6 @@ export const getProductById = (productId) => {
 };
 
 export const updateProduct=(productId, productInfo)=>{
-  return adminInstance.put(`/updateproduct/${productId}`,productInfo)
+  console.log(productInfo);
+  // return adminInstance.put(`/updateproduct/${productId}`,productInfo)
 }
