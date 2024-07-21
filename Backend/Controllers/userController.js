@@ -44,7 +44,7 @@ module.exports.login = async (req, res) => {
             const auth = await bcrypt.compare(Password, customer.Password);
             if (auth) {
                 const token = jwt.sign({ id: customer._id }, secretKey, { expiresIn: '1h' });
-                return res.json({ message: "Login successful", success: true, token, username: customer.username, Emailaddress:customer.Emailaddress, userId:customer._id, Phonenumber:customer.Phonenumber }); // Include the username in the response
+                return res.json({ message: "Login successful", success: true, token, username: customer.username, Emailaddress:customer.Emailaddress, userId:customer._id, Phonenumber:customer.Phonenumber,status:customer.status }); // Include the username in the response
             } else {
                 return res.json({ message: "Incorrect password", success: false });
             }

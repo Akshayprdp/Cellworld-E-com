@@ -19,23 +19,26 @@ function Login() {
         Password: yup.string().required("Password required"),
     });
 
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     async function onSubmit(values) {
         try {
             const response = await userLogin(values);
-            // console.log("API Response:", response.data);
             if (response.data.success) {
-                const { token, userId, username, Emailaddress, Phonenumber } = response.data;  
-                // toast.success(response.data.message);
-                localStorage.setItem('jwt', token);
-                localStorage.setItem('username', username);
-                localStorage.setItem('Emailaddress', Emailaddress); 
-                localStorage.setItem('userId', userId); 
-                localStorage.setItem('Phonenumber', Phonenumber);
-                navigate('/'); 
+                const { token, userId, username, Emailaddress, Phonenumber, status } = response.data;
+                if (status === "active") {
+                    toast.success(response.data.message);
+                    localStorage.setItem('jwt', token);
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('Emailaddress', Emailaddress);
+                    localStorage.setItem('userId', userId);
+                    localStorage.setItem('Phonenumber', Phonenumber);
+                    navigate('/');
+                } else {
+                    toast.error("Account is not active. Please contact support.");
+                }
             } else {
-                toast.error(response.data.message); 
+                toast.error(response.data.message);
             }
         } catch (error) {
             console.error("There was an error logging in!", error);
