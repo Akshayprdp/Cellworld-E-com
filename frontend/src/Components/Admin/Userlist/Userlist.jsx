@@ -17,13 +17,14 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
-  const handleDelete = async (userId) => {
+  const handleStatusToggle = async (userId, currentStatus) => {
+    const newStatus = currentStatus === 'active' ? 'blocked' : 'active';
     try {
-      const response = await updateUserStatus(userId, { status: 'blocked' });
+      const response = await updateUserStatus(userId, { status: newStatus });
       if (response.data.success) {
         setUserList((prevUserList) =>
           prevUserList.map((user) =>
-            user._id === userId ? { ...user, status: 'blocked' } : user
+            user._id === userId ? { ...user, status: newStatus } : user
           )
         );
       }
@@ -53,7 +54,11 @@ const UserList = () => {
                 <td className="userid">{user.status}</td>
                 <td>
                   <div className="action-buttons">
-                    <button onClick={() => handleDelete(user._id)}>BLOCK</button>
+                    <button
+                      onClick={() => handleStatusToggle(user._id, user.status)}
+                    >
+                      {user.status === 'active' ? 'BLOCK' : 'UNBLOCK'}
+                    </button>
                   </div>
                 </td>
               </tr>
