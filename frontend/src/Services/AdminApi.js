@@ -25,3 +25,8 @@ export const updateProduct=(productId, productInfo)=>{
   console.log(productInfo);
   // return adminInstance.put(`/updateproduct/${productId}`,productInfo)
 }
+
+
+export const updateUserStatus = async (userId, data) => {
+  return await adminInstance.put(`/user/status/${userId}`, data); // Ensure this matches your backend route
+};

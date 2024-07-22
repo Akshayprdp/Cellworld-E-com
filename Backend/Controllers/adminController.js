@@ -112,6 +112,33 @@ module.exports.getProductById = async (req, res) => {
   }
 };
 
+
+// adminController.js
+module.exports.updateUserStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const updatedUser = await userModel.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (updatedUser) {
+      res.json({ success: true, user: updatedUser });
+    } else {
+      res.status(404).json({ success: false, message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error updating user status:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+
+
+
 module.exports.updateProduct = async (req, res) => {
   console.log("from update",req.body);
   // try {

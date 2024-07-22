@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { adminLogin,userList,productadd,productlist,getProductById,updateProduct } = require('../Controllers/adminController');
+const { adminLogin,userList,productadd,productlist,getProductById,updateProduct,updateUserStatus } = require('../Controllers/adminController');
 const upload = require('../Middleware/Multer');
 
 
@@ -9,6 +9,9 @@ const upload = require('../Middleware/Multer');
 router.post('/adminlogin', adminLogin);
 
 router.get('/users', userList);
+
+// router.put('/user/status/:id', updateUserStatus);
+router.put('/user/status/:id', updateUserStatus);
 
 router.post('/productadd',upload.single('imageFile'),productadd);
 
@@ -20,7 +23,6 @@ router.put('/updateproduct/:id',updateProduct)
 
 
 
-// userList
 
 
 module.exports = router;
