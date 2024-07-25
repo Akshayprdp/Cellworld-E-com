@@ -46,6 +46,7 @@
   .action-buttons {
     display: flex;
     gap: 10px;
+    /* margin-left: 10px; */
   }
   
   .action-buttons button {

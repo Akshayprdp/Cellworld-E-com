@@ -13,7 +13,6 @@ const Cartitems = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       const userId = localStorage.getItem('userId');
-
       try {
         const response = await getCartItems(userId);
         if (response.data.status) {
@@ -70,8 +69,10 @@ const Cartitems = () => {
                   <img className="cart-item-image" src={`http://localhost:4000${item.imageUrl}`} alt={item.productName} />
                   <div className="cart-item-details">
                     <h4>{item.productName}</h4>
-                    <p>Price: ₹{item.price}</p>
-                    <p>Total: ₹{item.price.toFixed(2)}</p>
+                    <br />
+                    <p>Price: ₹{item.price.toFixed(2)}</p>
+                    
+                    {/* <p>Total: ₹{item.price.toFixed(2)}</p> */}
                   </div>
                   <button className="remove-item" onClick={() => handleRemoveItem(item._id)}>
                     <FontAwesomeIcon icon={faTrashAlt} /> Remove

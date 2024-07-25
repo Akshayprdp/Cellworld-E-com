@@ -21,6 +21,7 @@
 .price {
   margin: 20px 0;
   text-align: center;
+  font-weight: 600;
 }
 
 .remove-button {

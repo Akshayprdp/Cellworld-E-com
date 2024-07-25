@@ -23,9 +23,8 @@ export const getProductById = (productId) => {
 
 export const updateProduct=(productId, productInfo)=>{
   console.log(productInfo);
-  // return adminInstance.put(`/updateproduct/${productId}`,productInfo)
+  return adminInstance.put(`/updateproduct/${productId}`,productInfo)
 }
-
 
 export const updateUserStatus = async (userId, data) => {
   return await adminInstance.put(`/user/status/${userId}`, data);

@@ -10,7 +10,6 @@ router.post('/adminlogin', adminLogin);
 
 router.get('/users', userList);
 
-// router.put('/user/status/:id', updateUserStatus);
 router.put('/user/status/:id', updateUserStatus);
 
 router.post('/productadd',upload.single('imageFile'),productadd);

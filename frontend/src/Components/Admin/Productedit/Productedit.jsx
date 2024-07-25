@@ -42,32 +42,34 @@ function Productedit() {
       .min(10, 'Minimum 10 letters needed'),
     price: yup.string()
       .required('Price is required')
-      .test('is-rupees', 'Price must start with ₹', value => value && value.startsWith('₹'))
-      .test('is-valid-amount', 'Price must be a valid positive number after ₹', value => {
-        if (value) {
-          const amount = value.slice(1);
-          return !isNaN(amount) && Number(amount) > 0;
-        }
-        return false;
-      }),
-    category: yup.string().required('Category is required'),
+      // .test('is-rupees', 'Price must start with ₹', value => value && value.startsWith('₹'))
+      // .test('is-valid-amount', 'Price must be a valid positive number after ₹', value => {
+      //   if (value) {
+      //     const amount = value.slice(1);
+      //     return !isNaN(amount) && Number(amount) > 0;
+      //   }
+      //   return false;
+      // }),,
+    ,category: yup.string().required('Category is required'),
     imageFile: yup.mixed().required('Image is required'),
   });
 
   const onSubmit = async (values) => {
-    try {
-      const formData = new FormData();
-      formData.append('productName', values.productName);
-      formData.append('description', values.description);
-      formData.append('price', values.price.slice(1)); // Remove the ₹ symbol
-      formData.append('category', values.category);
-      formData.append('imageFile', values.imageFile);
+    console.log(values);
 
-      const response = await updateProduct(productId, formData);
-      console.log('Product updated successfully:', response.data); // Log success response
+    try {
+      // const formData = new FormData();
+      // formData.append('productName', values.productName);
+      // formData.append('description', values.description);
+      // formData.append('price', values.price.slice(1)); 
+      // formData.append('category', values.category);
+      // formData.append('imageFile', values.imageFile);
+
+      const response = await updateProduct(productId, values);
+      console.log('Product updated successfully:', response.data); 
       navigate('/admin/productlist');
 
-      console.log(formData);
+      
 
     } catch (error) {
       console.error('Error updating product:', error.response ? error.response.data : error.message);

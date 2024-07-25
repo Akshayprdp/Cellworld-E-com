@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 
-function Category({ categories, setCategories }) {
+function CategoryManager({ categories, setCategories }) {
   const [newCategory, setNewCategory] = useState('');
 
   const handleAddCategory = () => {
@@ -30,4 +31,9 @@ function Category({ categories, setCategories }) {
   );
 }
 
-export default Category;
+CategoryManager.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired, // Ensure categories is an array of strings
+  setCategories: PropTypes.func.isRequired // Ensure setCategories is a function
+};
+
+export default CategoryManager;

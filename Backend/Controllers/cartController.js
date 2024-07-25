@@ -108,7 +108,7 @@ module.exports.removeCartItem = async (req, res) => {
         .json({ message: "Product not found in cart", success: false });
     }
 
-    cartItem.proIds.splice(productIndex, 1); // Remove product
+    cartItem.proIds.splice(productIndex, 1); 
     cartItem.quantity -= 1;
 
     await cartItem.save();
