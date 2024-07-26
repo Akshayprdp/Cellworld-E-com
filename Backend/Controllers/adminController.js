@@ -113,7 +113,6 @@ module.exports.getProductById = async (req, res) => {
 };
 
 
-// adminController.js
 module.exports.updateUserStatus = async (req, res) => {
   try {
     const { id } = req.params;

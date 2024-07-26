@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { addcategory } from '../../../Services/AdminApi';
 
 function Category({ categories, setCategories }) {
   const [newCategory, setNewCategory] = useState('');
 
-  const handleAddCategory = () => {
-    if (newCategory && !categories.includes(newCategory)) {
-      setCategories([...categories, newCategory]);
+  const handleAddCategory = async () => {
+    if (newCategory && Array.isArray(categories) && !categories.includes(newCategory)) {
+      try {
+        const response = await addcategory({ name: newCategory });
+        if (response.data.success) {
+          setCategories([...categories, newCategory]);
+          toast.success('Category added successfully!');
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        toast.error('An error occurred while adding the category.');
+        console.error(error);
+      }
       setNewCategory('');
     }
   };

@@ -21,8 +21,8 @@ function Userrouter() {
         <Route path='/product/:id' element={<Singleproductlistpage/>} />
         <Route path='/cart'  element ={<ProtectedRoute element={<Cartpage />}/>} />
         <Route path='/category' element={<Categorypage />} />
-        <Route path='/wishlist' element={<Wishlistpage />} />
-        <Route path='/profile' element={<Profilepage />} />
+        <Route path='/wishlist'  element ={<ProtectedRoute element={<Wishlistpage/>}/>} />
+        <Route path='/profile' element ={<ProtectedRoute element={<Profilepage/>}/>} />
         <Route path='/list/:category' element={<Productlistpage />} />
         <Route path='*' element={<Homepage/>}/>
       </Routes>

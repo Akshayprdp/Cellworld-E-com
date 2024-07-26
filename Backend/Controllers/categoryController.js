@@ -1,6 +1,6 @@
 // controllers/categoryController.js
 
-const Category = require('../Model/cartModel');
+const Category = require('../Model/CategoryModel');
 
 // Add a new category
 exports.addCategory = async (req, res) => {

@@ -29,3 +29,8 @@ export const updateProduct=(productId, productInfo)=>{
 export const updateUserStatus = async (userId, data) => {
   return await adminInstance.put(`/user/status/${userId}`, data);
 };
+
+
+export const addcategory = (values) => {
+  return adminInstance.post("/addcategory", values);
+};
