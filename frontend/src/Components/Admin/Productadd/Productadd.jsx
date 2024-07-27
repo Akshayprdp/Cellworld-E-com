@@ -2,10 +2,31 @@ import React from 'react';
 import './Productadd.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { productadd } from '../../../Services/AdminApi'; // Add this import
+import { productadd ,categoryitems} from '../../../Services/AdminApi'; 
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 function Productadd() {
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await categoryitems();
+        if (response.data.success) {
+          setCategories(response.data.categories); 
+        } else {
+          console.error('Failed to fetch categories');
+        }
+      } catch (error) {
+        console.error('An error occurred while fetching categories', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   const initialValues = {
     productName: '',
     description: '',
@@ -122,8 +143,11 @@ function Productadd() {
               onBlur={formik.handleBlur}
             >
               <option value="" label="Select category" />
-              <option value="apple" label="Apple" />
-              <option value="android" label="Android" />
+              {categories.map((category) => (
+              // <option value="apple" label="Apple" />
+              <option key={category._id} value={category.name} label={category.name} />
+              // <option value="android" label="Android" />
+            ))}
             </select>
             {formik.touched.category && formik.errors.category ? (
               <div className="form-error">{formik.errors.category}</div>

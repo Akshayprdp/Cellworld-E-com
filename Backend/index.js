@@ -7,7 +7,7 @@ const userRoutes=require("./Routes/userRoutes")
 const adminRoutes=require('./Routes/adminRoutes')
 const cors = require('cors')
 const cartRoutes = require('./Routes/cartRoutes');
-const categoryRoutes = require('./Routes/categoryRoutes');
+// const categoryRoutes = require('./Routes/categoryRoutes');
 const wishlistRoutes = require('./Routes/wishlistRoutes');
 
 
@@ -18,7 +18,7 @@ app.use(cors())
 app.use("/", userRoutes);
 app.use("/admin",adminRoutes)
 app.use('/uploads', express.static('uploads'));
-app.use("/api/categories", categoryRoutes);
+// app.use("/categories", categoryRoutes);
 
 app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishlistRoutes);

@@ -34,3 +34,7 @@ export const updateUserStatus = async (userId, data) => {
 export const addcategory = (values) => {
   return adminInstance.post("/addcategory", values);
 };
+
+export const categoryitems =()=>{
+  return adminInstance.get("getcategory")
+}
