@@ -59,7 +59,7 @@ function Header() {
             </ul>
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/category" onClick={(e) => handleProtectedNavigation(e, '/category')}>
+                <Link className="nav-link active" aria-current="page" to="/category" >
                   <FontAwesomeIcon icon={faList} />
                   Category
                 </Link>
