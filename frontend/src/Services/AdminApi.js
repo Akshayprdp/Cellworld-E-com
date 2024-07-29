@@ -38,3 +38,7 @@ export const addcategory = (values) => {
 export const categoryitems =()=>{
   return adminInstance.get("getcategory")
 }
+
+export const deleteCategory=(id)=>{
+  return adminInstance.delete(`/deletecategory/${id}`)
+}

@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { addcategory, categoryitems } from '../../../Services/AdminApi';
-import { FaTrash } from 'react-icons/fa'; // Import Font Awesome Trash Icon
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { addcategory, categoryitems,deleteCategory } from "../../../Services/AdminApi";
+import { FaTrash } from "react-icons/fa";
+import "./Category.css";
 
 function Category() {
   const [categories, setCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState('');
+  const [newCategory, setNewCategory] = useState("");
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -15,10 +16,10 @@ function Category() {
         if (response.data.success) {
           setCategories(response.data.categories); // Adjust according to your API response structure
         } else {
-          console.error('Failed to fetch categories');
+          console.error("Failed to fetch categories");
         }
       } catch (error) {
-        console.error('An error occurred while fetching categories', error);
+        console.error("An error occurred while fetching categories", error);
       }
     };
 
@@ -31,44 +32,44 @@ function Category() {
         const response = await addcategory({ name: newCategory });
         if (response.data.success) {
           setCategories([...categories, response.data.category]); // Adjust according to your API response structure
-          toast.success('Category added successfully!');
+          toast.success("Category added successfully!");
         } else {
           toast.error(response.data.message);
         }
       } catch (error) {
-        toast.error('An error occurred while adding the category');
+        toast.error("An error occurred while adding the category");
         console.error(error);
       }
-      setNewCategory('');
+      setNewCategory("");
     } else {
-      toast.error('Category name cannot be empty');
+      toast.error("Category name cannot be empty");
     }
   };
 
-  // const handleDeleteCategory = async (id) => {
-  //   try {
-  //     const response = await deleteCategory(id);
-  //     if (response.data.success) {
-  //       setCategories(categories.filter((category) => category._id !== id)); // Adjust according to your API response structure
-  //       toast.success('Category deleted successfully!');
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     toast.error('An error occurred while deleting the category');
-  //     console.error(error);
-  //   }
-  // };
+  const handleDeleteCategory = async (id) => {
+    try {
+      const response = await deleteCategory(id);
+      if (response.data.success) {
+        setCategories(categories.filter((category) => category._id !== id));
+        toast.success('Category deleted successfully!');
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error('An error occurred while deleting the category');
+      console.error(error);
+    }
+  };
+  
 
   return (
     <div className="category-manager">
-      <div className="form-group">
-        <label htmlFor="newCategory" className="form-label">Add New Category</label>
+      <div className="form-group1">
         <input
           type="text"
           id="newCategory"
           name="newCategory"
-          className="form-control"
+          className="form-control-category"
           value={newCategory}
           onChange={(e) => setNewCategory(e.target.value)}
         />
@@ -76,10 +77,10 @@ function Category() {
           Add Category
         </button>
       </div>
-      
+
       <div className="category-table">
         <table className="table">
-          <thead>
+          <thead className="thead-dark">
             <tr>
               <th>Category</th>
               <th>Actions</th>
@@ -92,8 +93,8 @@ function Category() {
                 <td>
                   <button
                     type="button"
-                    className="btn btn-danger"
-                    // onClick={() => handleDeleteCategory(category._id)}
+
+                  onClick={() => handleDeleteCategory(category._id)}
                   >
                     <FaTrash />
                   </button>

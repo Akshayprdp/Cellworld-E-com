@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { adminLogin,userList,productadd,productlist,getProductById,updateProduct,updateUserStatus } = require('../Controllers/adminController');
-
-const{addCategory,getCategories}= require('../Controllers/categoryController')
-
+const { adminLogin,userList,productadd,productlist,getProductById,updateProduct,updateUserStatus} = require('../Controllers/adminController');
+const{addCategory,getCategories,deleteCategory }= require('../Controllers/categoryController')
 const upload = require('../Middleware/Multer');
 
 
@@ -26,6 +24,8 @@ router.put('/updateproduct/:id',updateProduct)
 router.post('/addcategory', addCategory);
 
 router.get('/getcategory',getCategories);
+
+router.delete('/deletecategory/:id',deleteCategory)
 
 
 
