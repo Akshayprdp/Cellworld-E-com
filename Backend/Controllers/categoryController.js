@@ -1,11 +1,11 @@
-// controllers/categoryController.js
-
 const Category = require('../Model/CategoryModel');
 
 exports.addCategory = async (req, res) => {
   try {
     const { name } = req.body;
     const existingCategory = await Category.findOne({ name });
+    console.log('Request Body:', req.body);
+
     if (existingCategory) {
       return res.status(400).json({ success: false, message: 'Category already exists' });
     }

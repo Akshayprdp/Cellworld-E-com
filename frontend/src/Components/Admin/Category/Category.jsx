@@ -4,10 +4,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { addcategory, categoryitems,deleteCategory } from "../../../Services/AdminApi";
 import { FaTrash } from "react-icons/fa";
 import "./Category.css";
+import { useNavigate } from 'react-router-dom';
 
 function Category() {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -33,6 +35,7 @@ function Category() {
         if (response.data.success) {
           setCategories([...categories, response.data.category]); // Adjust according to your API response structure
           toast.success("Category added successfully!");
+          navigate('/admin');
         } else {
           toast.error(response.data.message);
         }

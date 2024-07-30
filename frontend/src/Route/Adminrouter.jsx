@@ -21,6 +21,7 @@ function Adminrouter() {
         <Route path='/category' element={<AdminProtectRoute  element={<Categorypage/>}/>}/>
         {/* <Route path='/productedit' element={<Producteditpage/>}/> */}
         <Route path="/productedit/:productId" element={<AdminProtectRoute element={<Producteditpage />}/>} />
+        <Route path='*' element={<Loginpage/>}/>
       </Routes>
       
     </div>
