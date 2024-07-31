@@ -33,7 +33,7 @@ function Category() {
       try {
         const response = await addcategory({ name: newCategory });
         if (response.data.success) {
-          setCategories([...categories, response.data.category]); // Adjust according to your API response structure
+          setCategories([...categories, response.data.category]); 
           toast.success("Category added successfully!");
           navigate('/admin');
         } else {
