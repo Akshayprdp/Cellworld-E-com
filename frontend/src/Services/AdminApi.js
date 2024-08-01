@@ -42,3 +42,7 @@ export const categoryitems =()=>{
 export const deleteCategory=(id)=>{
   return adminInstance.delete(`/deletecategory/${id}`)
 }
+
+export const deleteproduct=()=>{
+  return adminInstance.delete('/deleteproduct')
+}

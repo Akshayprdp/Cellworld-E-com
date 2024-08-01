@@ -150,3 +150,8 @@ module.exports.updateProduct = async (req, res) => {
 };
 
 
+module.exports.deleteproduct = async(req,res)=>{
+  
+}
+
+
