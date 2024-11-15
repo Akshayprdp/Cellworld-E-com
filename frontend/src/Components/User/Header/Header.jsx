@@ -7,7 +7,7 @@ import { faUser, faShoppingCart, faList, faHeart, faUserPlus } from '@fortawesom
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -32,13 +32,13 @@ function Header() {
     localStorage.removeItem('userId'); 
     setIsLoggedIn(false);
     setUsername('');
-    navigate('/');
+    // navigate('/');
   };
 
   const handleProtectedNavigation = (e, path) => {
     if (!isLoggedIn) {
       e.preventDefault();
-      navigate('/login');
+      // navigate('/');
     }
   };
 
